@@ -31,3 +31,9 @@ void Compiler::MainPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml
 {
 
 }
+
+
+void Compiler::MainPage::HamburgerButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	splitView->IsPaneOpen = !splitView->IsPaneOpen;
+}
