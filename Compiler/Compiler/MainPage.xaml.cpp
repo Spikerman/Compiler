@@ -24,16 +24,27 @@ using namespace Windows::UI::Xaml::Navigation;
 MainPage::MainPage()
 {
 	InitializeComponent();
+
+	_navLinks = ref new Platform::Collections::Vector<Compiler::DataModel::NavLink^>();
+	auto navLink1 = ref new Compiler::DataModel::NavLink();
+	navLink1->Label = "Main";
+	navLink1->Symbol = Windows::UI::Xaml::Controls::Symbol::Home;
+	_navLinks->Append(navLink1);
 }
 
 
 void Compiler::MainPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-
 }
 
 
 void Compiler::MainPage::HamburgerButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	splitView->IsPaneOpen = !splitView->IsPaneOpen;
+}
+
+
+void Compiler::MainPage::NavLinksList_ItemClick(Platform::Object^ sender, Windows::UI::Xaml::Controls::ItemClickEventArgs^ e)
+{
+
 }
