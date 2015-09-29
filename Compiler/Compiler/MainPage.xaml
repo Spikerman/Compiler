@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Compiler"
     xmlns:localDataModel="using:Compiler.DataModel"
+    xmlns:localUi="using:Compiler.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -63,7 +64,27 @@
                 </Grid>
             </SplitView.Pane>
             <Grid>
-                <TextBox AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"/>
+                <localUi:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="2">
+                    <AppBarButton Icon="Find" Label="词法分析" x:Name="词法分析AppBarButton"/>
+                    <AppBarButton Icon="Find" Label="语法分析" x:Name="语法分析AppBarButton"/>
+                    <AppBarButton Icon="OpenLocal" Label="xxx" x:Name="xxxAppBarButton">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <ListView x:Name="xxxListView" SelectionMode="None"/>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                    <AppBarSeparator/>
+                    <localUi:DynamicCommandBar.SecondaryCommands>
+                        <AppBarButton Icon="Setting" Label="Settings"/>
+                    </localUi:DynamicCommandBar.SecondaryCommands>
+                </localUi:DynamicCommandBar>
             </Grid>
         </SplitView>
     </Grid>

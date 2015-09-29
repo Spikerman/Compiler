@@ -7,6 +7,7 @@
 
 #include "MainPage.g.h"
 #include "NavLink.h"
+#include "DynamicCommandBar.h"
 
 namespace Compiler
 {
