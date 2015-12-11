@@ -22,15 +22,15 @@ namespace Compiler
 		//如果你的类需要将序列容器传递到另一个 Windows 运行时组件，
 		//请使用 Windows::Foundation::Collections::IVector<T> 作为参数或返回类型，
 		//并使用 Platform::Collections::Vector<T> 作为具体实现。
-		property Windows::Foundation::Collections::IVector<Compiler::DataModel::NavLink^>^ NavLinks
+		property Windows::Foundation::Collections::IVector<Compiler::DataModel::View::NavLink^>^ NavLinks
 		{
-			Windows::Foundation::Collections::IVector<Compiler::DataModel::NavLink^>^ get()
+			Windows::Foundation::Collections::IVector<Compiler::DataModel::View::NavLink^>^ get()
 			{
 				return _navLinks;
 			}
 		}
 	private:
-		Platform::Collections::Vector<Compiler::DataModel::NavLink^>^ _navLinks;
+		Platform::Collections::Vector<Compiler::DataModel::View::NavLink^>^ _navLinks;
 		void Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void HamburgerButton_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void NavLinksList_ItemClick(Platform::Object^ sender, Windows::UI::Xaml::Controls::ItemClickEventArgs^ e);

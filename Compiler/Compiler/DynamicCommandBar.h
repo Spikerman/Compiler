@@ -13,42 +13,45 @@ namespace Compiler
 {
 	namespace UI
 	{
-		public ref class DynamicCommandBar sealed : public CommandBar
+		namespace Controls
 		{
-		protected:
-			virtual void OnApplyTemplate() override;
-			virtual Size MeasureOverride(Size desiredSize) override;
-
-		public:
-			static property DependencyProperty^ ContentMinWidthProperty
+			public ref class DynamicCommandBar sealed : public CommandBar
 			{
-				DependencyProperty^ get()
+			protected:
+				virtual void OnApplyTemplate() override;
+				virtual Size MeasureOverride(Size desiredSize) override;
+
+			public:
+				static property DependencyProperty^ ContentMinWidthProperty
 				{
-					return _contentMinWidthProperty;
+					DependencyProperty^ get()
+					{
+						return _contentMinWidthProperty;
+					}
 				}
-			}
 
-			property double ContentMinWidth
-			{
-				double get()
+				property double ContentMinWidth
 				{
-					return (double)GetValue(ContentMinWidthProperty);
+					double get()
+					{
+						return (double)GetValue(ContentMinWidthProperty);
+					}
+
+					void set(double value)
+					{
+						SetValue(ContentMinWidthProperty, (Object^)value);
+					}
 				}
 
-				void set(double value)
-				{
-					SetValue(ContentMinWidthProperty, (Object^)value);
-				}
-			}
+			private:
+				static DependencyProperty^ _contentMinWidthProperty;
+				Button^ _moreButton;
 
-		private:
-			static DependencyProperty^ _contentMinWidthProperty;
-			Button^ _moreButton;
-
-			// Store the item and the width before moving
-			std::stack<std::tuple<ICommandBarElement^, double>> overflow = {};
-			std::queue<std::tuple<ICommandBarElement^, double>> separatorQueue = {};
-			double separatorQueueWidth = 0.0;
-		};
+				// Store the item and the width before moving
+				std::stack<std::tuple<ICommandBarElement^, double>> overflow = {};
+				std::queue<std::tuple<ICommandBarElement^, double>> separatorQueue = {};
+				double separatorQueueWidth = 0.0;
+			};
+		}
 	}
 }

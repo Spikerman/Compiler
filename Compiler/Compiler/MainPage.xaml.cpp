@@ -25,8 +25,8 @@ MainPage::MainPage()
 {
 	InitializeComponent();
 
-	_navLinks = ref new Platform::Collections::Vector<Compiler::DataModel::NavLink^>();
-	auto navLink1 = ref new Compiler::DataModel::NavLink();
+	_navLinks = ref new Platform::Collections::Vector<Compiler::DataModel::View::NavLink^>();
+	auto navLink1 = ref new Compiler::DataModel::View::NavLink();
 	navLink1->Label = "Main";
 	navLink1->Symbol = Windows::UI::Xaml::Controls::Symbol::Home;
 	_navLinks->Append(navLink1);
@@ -35,6 +35,9 @@ MainPage::MainPage()
 
 void Compiler::MainPage::Page_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	//ContentDialog^ sddjd = ref new ContentDialog();
+	//sddjd->Content = "sdfsdgdfg";
+	//sddjd->ShowAsync();
 }
 
 

@@ -4,59 +4,62 @@ namespace Compiler
 {
 	namespace DataModel
 	{
-		[Windows::UI::Xaml::Data::Bindable]
-		public ref class NavLink sealed
+		namespace View
 		{
-		public:
-			property Platform::String^ Label
+			[Windows::UI::Xaml::Data::Bindable]
+			public ref class NavLink sealed
 			{
-				Platform::String^ get()
+			public:
+				property Platform::String^ Label
 				{
-					return _label;
-				}
-				void set(Platform::String^ value)
-				{
-					if (!_label->Equals(value))
+					Platform::String^ get()
 					{
-						_label = value;
+						return _label;
+					}
+					void set(Platform::String^ value)
+					{
+						if (!_label->Equals(value))
+						{
+							_label = value;
+						}
 					}
 				}
-			}
 
-			property Windows::UI::Xaml::Controls::Symbol Symbol
-			{
-				Windows::UI::Xaml::Controls::Symbol get()
+				property Windows::UI::Xaml::Controls::Symbol Symbol
 				{
-					return _symbol;
-				}
-				void set(Windows::UI::Xaml::Controls::Symbol value)
-				{
-					if (!_symbol.Equals(value))
+					Windows::UI::Xaml::Controls::Symbol get()
 					{
-						_symbol = value;
+						return _symbol;
+					}
+					void set(Windows::UI::Xaml::Controls::Symbol value)
+					{
+						if (!_symbol.Equals(value))
+						{
+							_symbol = value;
+						}
 					}
 				}
-			}
 
-			//property Platform::Type^ ClassType
-			//{
-			//	Platform::Type^ get()
-			//	{
-			//		return _classType;
-			//	}
-			//	void set(Platform::Type^ value)
-			//	{
-			//		if (!_classType->Equals(value))
-			//		{
-			//			_classType = value;
-			//		}
-			//	}
-			//}
+				//property Platform::Type^ ClassType
+				//{
+				//	Platform::Type^ get()
+				//	{
+				//		return _classType;
+				//	}
+				//	void set(Platform::Type^ value)
+				//	{
+				//		if (!_classType->Equals(value))
+				//		{
+				//			_classType = value;
+				//		}
+				//	}
+				//}
 
-		private:
-			Platform::String^ _label;
-			Windows::UI::Xaml::Controls::Symbol _symbol;
-			//Platform::Type^ _classType;
-		};
+			private:
+				Platform::String^ _label;
+				Windows::UI::Xaml::Controls::Symbol _symbol;
+				//Platform::Type^ _classType;
+			};
+		}
 	}
 }
