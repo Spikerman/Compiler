@@ -7,6 +7,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,12 +27,11 @@ namespace Compiler
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //public static Pivot MainPivot { get; private set; }
-
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        public StorageFile CodeFile { get; set; }
+        public LinkedList<Symbol> SymbolTable { get; } = new LinkedList<Symbol>();
+        public LinkedList<Token> TokenListWithType { get; set; }
+        public LinkedList<Token> SemanticList { get; } = new LinkedList<Token>();
+        public LinkedList<Token> ThreeAddressList { get; } = new LinkedList<Token>();
 
         public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>
         {
@@ -38,6 +39,11 @@ namespace Compiler
             //new NavLink { Label = "Test", Symbol = Symbol.Home },
             //new NavLink { Label = "获取文件夹访问权限", Symbol = Symbol.Library }
         };
+
+        public MainPage()
+        {
+            InitializeComponent();
+        }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
@@ -65,6 +71,34 @@ namespace Compiler
         {
             //MainPivot = MainPivotInstance;
             //ScenarioFrame.Navigate(typeof(LibrariesPage));
+        }
+
+        private async void OpenAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.List,
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
+            openPicker.FileTypeFilter.Add(".txt");
+            CodeFile = await openPicker.PickSingleFileAsync();
+            if (CodeFile == null)
+            {
+                return;
+            }
+            LinkedList<Token> tokenList = await Lexical.Separate(CodeFile);
+            TokenListWithType = Lexical.GiveType(tokenList, SymbolTable);
+        }
+
+        private void 词法分析AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            演示TextBox.Text = Lexical.TokenPrint(TokenListWithType);
+        }
+
+        private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
+            演示TextBox.Text = LlParser.LLparser(TokenListWithType, SemanticList);
         }
     }
 }

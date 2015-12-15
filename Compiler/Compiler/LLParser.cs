@@ -5,12 +5,11 @@ namespace Compiler
 {
     public class LlParser
     {
-        private static int _llSearchCounter = 0;
-        private static string _llSearchFile = string.Empty;
+        private static int _llSearchCounter;
+        private static string _outputString = string.Empty;
 
-        public static bool LL_search(Stack<string> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
+        public static bool LlSearch(Stack<string> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
         {
-            bool key = true;
             string stackTopWord = wordStack.Peek();
             Token tokenTop = tokenList.First.Value;
             string tokenData = tokenTop.Data;
@@ -22,7 +21,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("compoundstmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("program");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "program"));
@@ -31,7 +31,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("ifstmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("stmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "stmt"));
@@ -40,7 +41,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("whilestmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("stmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "stmt"));
@@ -49,7 +51,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("assgstmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("stmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "stmt"));
@@ -58,7 +61,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("compoundstmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("stmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "stmt"));
@@ -69,7 +73,8 @@ namespace Compiler
                 wordStack.Push("}");
                 wordStack.Push("stmts");
                 wordStack.Push("{");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("compoundstmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "compoundstmt"));
@@ -79,7 +84,8 @@ namespace Compiler
                 wordStack.Pop();
                 wordStack.Push("stmts");
                 wordStack.Push("stmt");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("stmts");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "stmts"));
@@ -104,7 +110,8 @@ namespace Compiler
                 wordStack.Push("boolexpr");
                 wordStack.Push("(");
                 wordStack.Push("if");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 sum.Push(_llSearchCounter);
                 Output("ifstmt");
                 Output(Environment.NewLine);
@@ -118,7 +125,8 @@ namespace Compiler
                 wordStack.Push("boolexpr");
                 wordStack.Push("(");
                 wordStack.Push("while");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("whilestmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "whilestmt"));
@@ -131,7 +139,8 @@ namespace Compiler
                 wordStack.Push("=");
                 wordStack.Push("ID");
                 sum.Push(_llSearchCounter);
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("assgstmt");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "assgstmt"));
@@ -142,7 +151,8 @@ namespace Compiler
                 wordStack.Push("arithexpr");
                 wordStack.Push("boolop");
                 wordStack.Push("arithexpr");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("boolexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "boolexpr"));
@@ -161,7 +171,8 @@ namespace Compiler
                 wordStack.Pop();
                 wordStack.Push("arithexprprime");
                 wordStack.Push("multexpr");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("arithexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "arithexpr"));
@@ -172,7 +183,8 @@ namespace Compiler
                 wordStack.Push("arithexprprime");
                 wordStack.Push("multexpr");
                 wordStack.Push("+");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("arithexprprime");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "arithexprprime"));
@@ -183,13 +195,13 @@ namespace Compiler
                 wordStack.Push("arithexprprime");
                 wordStack.Push("multexpr");
                 wordStack.Push("-");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("arithexprprime");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "arithexprprime"));
             }
-            else if (stackTopWord == "arithexprprime" &&
-                     (tokenType == "relation_operator" || tokenData == ")" || tokenData == ";"))
+            else if (stackTopWord == "arithexprprime" && (tokenType == "relation_operator" || tokenData == ")" || tokenData == ";"))
             {
                 wordStack.Pop();
                 PrintSpace(_llSearchCounter);
@@ -198,14 +210,13 @@ namespace Compiler
                 semanticList.AddLast(new Token("non_terminal", "arithexprprime"));
                 semanticList.AddLast(new Token("end_terminal", "arithexprprime:ε"));
             }
-            else if (stackTopWord == "multexpr" &&
-                     (tokenType == "ID" || tokenType == "integer" || tokenType == "real_number" ||
-                      tokenData == "("))
+            else if (stackTopWord == "multexpr" && (tokenType == "ID" || tokenType == "integer" || tokenType == "real_number" || tokenData == "("))
             {
                 wordStack.Pop();
                 wordStack.Push("multexprprime");
                 wordStack.Push("simpleexpr");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("multexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "multexpr"));
@@ -216,7 +227,8 @@ namespace Compiler
                 wordStack.Push("multexprprime");
                 wordStack.Push("simpleexpr");
                 wordStack.Push("*");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("multexprprime");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "multexprprime"));
@@ -227,7 +239,8 @@ namespace Compiler
                 wordStack.Push("multexprprime");
                 wordStack.Push("simpleexpr");
                 wordStack.Push("/");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("multexprprime");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "multexprprime"));
@@ -245,7 +258,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("ID");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("simpleexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "simpleexpr"));
@@ -254,7 +268,8 @@ namespace Compiler
             {
                 wordStack.Pop();
                 wordStack.Push("Num");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("simpleexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "simpleexpr"));
@@ -265,7 +280,8 @@ namespace Compiler
                 wordStack.Push(")");
                 wordStack.Push("arithexpr");
                 wordStack.Push("(");
-                PrintSpace(_llSearchCounter++);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
                 Output("simpleexpr");
                 Output(Environment.NewLine);
                 semanticList.AddLast(new Token("non_terminal", "simpleexpr"));
@@ -276,7 +292,7 @@ namespace Compiler
                 PrintSpace(_llSearchCounter);
                 Output("ID");
                 Output(Environment.NewLine);
-                semanticList.AddLast(tokenList.First.Value);
+                semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == "Num" && (tokenType == "integer" || tokenType == "real_number"))
@@ -285,15 +301,13 @@ namespace Compiler
                 PrintSpace(_llSearchCounter);
                 Output("Num");
                 Output(Environment.NewLine);
-                semanticList.AddLast(tokenList.First.Value);
+                semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == tokenData)
             {
                 wordStack.Pop();
-                Token t = tokenList.First.Value;
-
-                semanticList.AddLast(t);
+                semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
                 if (tokenType == "operator" || tokenType == "relation_operator")
                 {
@@ -310,8 +324,7 @@ namespace Compiler
                 }
                 else if (tokenData == "}" || tokenData == ";" || tokenData == ")")
                 {
-                    _llSearchCounter = sum.Peek();
-                    sum.Pop();
+                    _llSearchCounter = sum.Pop();
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
@@ -325,8 +338,7 @@ namespace Compiler
                 }
                 else if (tokenData == "else")
                 {
-                    _llSearchCounter = sum.Peek();
-                    sum.Pop();
+                    _llSearchCounter = sum.Pop();
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
@@ -345,22 +357,23 @@ namespace Compiler
                 Output("  输入:");
                 Output(tokenData);
                 Output(Environment.NewLine);
-                key = false;
+                return false;
             }
 
-            return key;
+            return true;
         }
 
-        public static bool LLparser(LinkedList<Token> in1, LinkedList<Token> semanticList)
+        public static string LLparser(LinkedList<Token> in1, LinkedList<Token> semanticList)
         {
+            _outputString = string.Empty;
             bool key = true;
             Stack<int> sum = new Stack<int>();
 
-            Stack<string> word = stack_init();
+            Stack<string> word = StackInit();
 
             while (word.Count > 0 && in1.Count > 0)
             {
-                bool flag = LL_search(word, in1, sum, semanticList);
+                bool flag = LlSearch(word, in1, sum, semanticList);
                 if (flag == false)
                 {
                     key = false;
@@ -374,10 +387,10 @@ namespace Compiler
                 Output(Environment.NewLine);
             }
 
-            return key;
+            return _outputString;
         }
 
-        public static Stack<string> stack_init()
+        public static Stack<string> StackInit()
         {
             Stack<string> word = new Stack<string>();
             word.Push("program");
@@ -395,7 +408,7 @@ namespace Compiler
 
         public static void Output(string content)
         {
-            _llSearchFile += content;
+            _outputString += content;
         }
     }
 }

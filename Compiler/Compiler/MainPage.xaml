@@ -70,10 +70,11 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBox AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"/>
+                <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"/>
                 <controls:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="2">
-                    <AppBarButton Icon="Find" Label="词法分析" x:Name="词法分析AppBarButton"/>
-                    <AppBarButton Icon="Find" Label="语法分析" x:Name="语法分析AppBarButton"/>
+                    <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>
+                    <AppBarButton Icon="Find" Label="词法分析" x:Name="词法分析AppBarButton" Click="词法分析AppBarButton_Click"/>
+                    <AppBarButton Icon="Find" Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click"/>
                     <AppBarButton Icon="OpenLocal" Label="xxx" x:Name="xxxAppBarButton">
                         <AppBarButton.Flyout>
                             <Flyout>
