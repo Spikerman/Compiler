@@ -399,7 +399,7 @@ namespace Compiler
             }
             else
             {
-                Output("boolexpr_go ERROR!!! NO arithexpr!!!");
+                Output(string.Format(ErrorDisplay, nameof(boolexpr_go), ConstString.Arithexpr));
                 Output(Environment.NewLine);
             }
 
@@ -411,7 +411,7 @@ namespace Compiler
             }
             else
             {
-                Output("boolexpr_go ERROR!!! NO boolop!!!");
+                Output(string.Format(ErrorDisplay, nameof(boolexpr_go), ConstString.Boolop));
                 Output(Environment.NewLine);
             }
 
@@ -422,7 +422,7 @@ namespace Compiler
             }
             else
             {
-                Output("boolexpr_go ERROR!!! NO arithexpr!!!");
+                Output(string.Format(ErrorDisplay, nameof(boolexpr_go), ConstString.Arithexpr));
                 Output(Environment.NewLine);
             }
 
