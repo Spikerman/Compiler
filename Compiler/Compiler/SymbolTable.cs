@@ -22,9 +22,9 @@ namespace Compiler
                 symbolTable.AddLast(tmp);
 
                 Output("[");
-                Output(tmp.Hang.ToString());
+                Output(tmp.LineNumber.ToString());
                 Output(",");
-                Output(tmp.Lie.ToString());
+                Output(tmp.ColumnNumber.ToString());
                 Output("] ");
                 Output(tmp.Name);
                 Output(" : ");

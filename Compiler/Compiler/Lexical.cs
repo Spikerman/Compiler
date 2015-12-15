@@ -8,6 +8,7 @@ namespace Compiler
     public static class Lexical
     {
         private static string _outputString = string.Empty;
+        //这个不得更改
         private const char Lf = '\n';
 
         private static void Output(string content)
@@ -39,7 +40,7 @@ namespace Compiler
                 {
                     if (inputChar == Lf)
                     {
-                        tokenData = "//" + tokenData;
+                        tokenData = ConstString.两斜杠 + tokenData;
                         tokenList.AddLast(new Token(tokenData, lineNumber, columnNumber));
                         tokenData = string.Empty;
                         lineNumber++;
@@ -147,7 +148,7 @@ namespace Compiler
                     else if (tokenData == string.Empty)
                     {
                         father = father + inputChar;
-                        if (father == "//")
+                        if (father == ConstString.两斜杠)
                         {
                             flag = true;
                             father = string.Empty;
@@ -191,155 +192,155 @@ namespace Compiler
                 Token frontToken = tokenList.First.Value;
                 string outTokenData = frontToken.Data;
                 tokenList.RemoveFirst();
-                if (outTokenData == "int")
+                if (outTokenData == ConstString.Int)
                 {
-                    frontToken.Type = "type"; // 类型
+                    frontToken.Type = ConstString.Type; // 类型
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "char")
+                else if (outTokenData == ConstString.Char)
                 {
-                    frontToken.Type = "type";
+                    frontToken.Type = ConstString.Type;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "bool")
+                else if (outTokenData == ConstString.Bool)
                 {
-                    frontToken.Type = "type";
+                    frontToken.Type = ConstString.Type;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "+")
+                else if (outTokenData == ConstString.加号)
                 {
-                    frontToken.Type = "operator"; // 操作符
+                    frontToken.Type = ConstString.Operator; // 操作符
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "-")
+                else if (outTokenData == ConstString.减号)
                 {
-                    frontToken.Type = "operator";
+                    frontToken.Type = ConstString.Operator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "*")
+                else if (outTokenData == ConstString.乘号)
                 {
-                    frontToken.Type = "operator";
+                    frontToken.Type = ConstString.Operator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "/")
+                else if (outTokenData == ConstString.除号)
                 {
-                    frontToken.Type = "operator";
+                    frontToken.Type = ConstString.Operator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == ">")
+                else if (outTokenData == ConstString.大于号)
                 {
-                    frontToken.Type = "relation_operator"; // 判断符
+                    frontToken.Type = ConstString.RelationOperator; // 判断符
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "<")
+                else if (outTokenData == ConstString.小于号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "=")
+                else if (outTokenData == ConstString.等号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "==")
+                else if (outTokenData == ConstString.相等号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == ">=")
+                else if (outTokenData == ConstString.大于等于号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "<=")
+                else if (outTokenData == ConstString.小于等于号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "!=")
+                else if (outTokenData == ConstString.不等号)
                 {
-                    frontToken.Type = "relation_operator";
+                    frontToken.Type = ConstString.RelationOperator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == ";")
+                else if (outTokenData == ConstString.分号)
                 {
-                    frontToken.Type = "terminator"; // 终结符
+                    frontToken.Type = ConstString.Terminator; // 终结符
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "{")
+                else if (outTokenData == ConstString.左大括号)
                 {
-                    frontToken.Type = "terminator";
+                    frontToken.Type = ConstString.Terminator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "}")
+                else if (outTokenData == ConstString.右大括号)
                 {
-                    frontToken.Type = "terminator";
+                    frontToken.Type = ConstString.Terminator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "(")
+                else if (outTokenData == ConstString.左括号)
                 {
-                    frontToken.Type = "terminator";
+                    frontToken.Type = ConstString.Terminator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == ")")
+                else if (outTokenData == ConstString.右括号)
                 {
-                    frontToken.Type = "terminator";
+                    frontToken.Type = ConstString.Terminator;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "if")
+                else if (outTokenData == ConstString.If)
                 {
-                    frontToken.Type = "key_word"; // 关键字
+                    frontToken.Type = ConstString.KeyWord; // 关键字
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "then")
+                else if (outTokenData == ConstString.Then)
                 {
-                    frontToken.Type = "key_word";
+                    frontToken.Type = ConstString.KeyWord;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "else")
+                else if (outTokenData == ConstString.Else)
                 {
-                    frontToken.Type = "key_word";
+                    frontToken.Type = ConstString.KeyWord;
                     tokenListWithType.AddLast(frontToken);
                 }
-                else if (outTokenData == "while")
+                else if (outTokenData == ConstString.While)
                 {
-                    frontToken.Type = "key_word";
+                    frontToken.Type = ConstString.KeyWord;
                     tokenListWithType.AddLast(frontToken);
                 }
                 else if (IsComment(outTokenData))
                 {
-                    frontToken.Type = "comment"; // 注释
+                    frontToken.Type = ConstString.Comment; //注释
                     tokenListWithType.AddLast(frontToken);
                 }
                 else if (IsReal(outTokenData))
                 {
-                    frontToken.Type = "real_number"; // 实数
+                    frontToken.Type = ConstString.RealNumber; //实数
                     tokenListWithType.AddLast(frontToken);
                 }
                 else if (IsExponent(outTokenData))
                 {
-                    frontToken.Type = "exponent"; // 指数
+                    frontToken.Type = ConstString.Exponent; //指数
                     tokenListWithType.AddLast(frontToken);
                 }
                 else if (IsId(outTokenData))
                 {
-                    frontToken.Type = "ID";
+                    frontToken.Type = ConstString.Id;
                     tokenListWithType.AddLast(frontToken);
                     SymbolTable.init_symbol_table(new Symbol(frontToken.Data, frontToken.LineNumber, frontToken.ColumnNumber), symbolTable);
                 }
                 else if (IsIntnum(outTokenData))
                 {
-                    frontToken.Type = "integer"; // 整数
+                    frontToken.Type = ConstString.Integer; // 整数
                     tokenListWithType.AddLast(frontToken);
                 }
                 else if (IsFraction(outTokenData))
                 {
-                    frontToken.Type = "fraction"; // 小数
+                    frontToken.Type = ConstString.Fraction; // 小数
                     tokenListWithType.AddLast(frontToken);
                 }
                 else
                 {
-                    frontToken.Type = "ERROR";
+                    frontToken.Type = ConstString.Error;
                     tokenListWithType.AddLast(frontToken);
                 }
             }

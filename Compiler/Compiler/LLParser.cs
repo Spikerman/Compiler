@@ -40,7 +40,7 @@ namespace Compiler
         {
             //Stack<TreeItemViewModel> word = new Stack<TreeItemViewModel>();
             Stack<string> word = new Stack<string>();
-            word.Push(Const.program);
+            word.Push(ConstString.Program);
 
             return word;
         }
@@ -54,289 +54,289 @@ namespace Compiler
             int lineNumber = tokenTop.LineNumber;
             int columnNumber = tokenTop.ColumnNumber;
 
-            if (stackTopWord == Const.program && tokenData == Const.左大括号)
+            if (stackTopWord == ConstString.Program && tokenData == ConstString.左大括号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.compoundstmt);
+                wordStack.Push(ConstString.Compoundstmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.program);
+                Output(ConstString.Program);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.program));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Program));
             }
-            else if (stackTopWord == Const.stmt && tokenData == Const.@if)
+            else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.If)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.ifstmt);
+                wordStack.Push(ConstString.Ifstmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.stmt);
+                Output(ConstString.Stmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmt));
             }
-            else if (stackTopWord == Const.stmt && tokenData == Const.@while)
+            else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.While)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.whilestmt);
+                wordStack.Push(ConstString.Whilestmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.stmt);
+                Output(ConstString.Stmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmt));
             }
-            else if (stackTopWord == Const.stmt && tokenType == Const.ID)
+            else if (stackTopWord == ConstString.Stmt && tokenType == ConstString.Id)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.assgstmt);
+                wordStack.Push(ConstString.Assgstmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.stmt);
+                Output(ConstString.Stmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmt));
             }
-            else if (stackTopWord == Const.stmt && tokenData == Const.左大括号)
+            else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.左大括号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.compoundstmt);
+                wordStack.Push(ConstString.Compoundstmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.stmt);
+                Output(ConstString.Stmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmt));
             }
-            else if (stackTopWord == Const.compoundstmt && tokenData == Const.左大括号)
+            else if (stackTopWord == ConstString.Compoundstmt && tokenData == ConstString.左大括号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.右大括号);
-                wordStack.Push(Const.stmts);
-                wordStack.Push(Const.左大括号);
+                wordStack.Push(ConstString.右大括号);
+                wordStack.Push(ConstString.Stmts);
+                wordStack.Push(ConstString.左大括号);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.compoundstmt);
+                Output(ConstString.Compoundstmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.compoundstmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Compoundstmt));
             }
-            else if (stackTopWord == Const.stmts && (tokenData == Const.@if || tokenData == Const.@while || tokenData == Const.左大括号 || tokenType == Const.ID))
+            else if (stackTopWord == ConstString.Stmts && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号 || tokenType == ConstString.Id))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.stmts);
-                wordStack.Push(Const.stmt);
+                wordStack.Push(ConstString.Stmts);
+                wordStack.Push(ConstString.Stmt);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.stmts);
+                Output(ConstString.Stmts);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmts));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmts));
             }
-            else if (stackTopWord == Const.stmts && tokenData == Const.右大括号)
+            else if (stackTopWord == ConstString.Stmts && tokenData == ConstString.右大括号)
             {
                 wordStack.Pop();
                 PrintSpace(_llSearchCounter);
-                Output(Const.stmts空);
+                Output(ConstString.Stmts空);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.stmts));
-                semanticList.AddLast(new Token(Const.end_terminal, Const.stmts空));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Stmts));
+                semanticList.AddLast(new Token(ConstString.EndTerminal, ConstString.Stmts空));
             }
-            else if (stackTopWord == Const.ifstmt && tokenData == Const.@if)
+            else if (stackTopWord == ConstString.Ifstmt && tokenData == ConstString.If)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.stmt);
-                wordStack.Push(Const.@else);
-                wordStack.Push(Const.stmt);
-                wordStack.Push(Const.then);
-                wordStack.Push(Const.右括号);
-                wordStack.Push(Const.boolexpr);
-                wordStack.Push(Const.左括号);
-                wordStack.Push(Const.@if);
+                wordStack.Push(ConstString.Stmt);
+                wordStack.Push(ConstString.Else);
+                wordStack.Push(ConstString.Stmt);
+                wordStack.Push(ConstString.Then);
+                wordStack.Push(ConstString.右括号);
+                wordStack.Push(ConstString.Boolexpr);
+                wordStack.Push(ConstString.左括号);
+                wordStack.Push(ConstString.If);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 sum.Push(_llSearchCounter);
-                Output(Const.ifstmt);
+                Output(ConstString.Ifstmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.ifstmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Ifstmt));
             }
-            else if (stackTopWord == Const.whilestmt && tokenData == Const.@while)
+            else if (stackTopWord == ConstString.Whilestmt && tokenData == ConstString.While)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.stmt);
-                wordStack.Push(Const.右括号);
-                wordStack.Push(Const.boolexpr);
-                wordStack.Push(Const.左括号);
-                wordStack.Push(Const.@while);
+                wordStack.Push(ConstString.Stmt);
+                wordStack.Push(ConstString.右括号);
+                wordStack.Push(ConstString.Boolexpr);
+                wordStack.Push(ConstString.左括号);
+                wordStack.Push(ConstString.While);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.whilestmt);
+                Output(ConstString.Whilestmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.whilestmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Whilestmt));
             }
-            else if (stackTopWord == Const.assgstmt && tokenType == Const.ID)
+            else if (stackTopWord == ConstString.Assgstmt && tokenType == ConstString.Id)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.分号);
-                wordStack.Push(Const.arithexpr);
-                wordStack.Push(Const.等号);
-                wordStack.Push(Const.ID);
+                wordStack.Push(ConstString.分号);
+                wordStack.Push(ConstString.Arithexpr);
+                wordStack.Push(ConstString.等号);
+                wordStack.Push(ConstString.Id);
                 sum.Push(_llSearchCounter);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.assgstmt);
+                Output(ConstString.Assgstmt);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.assgstmt));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Assgstmt));
             }
-            else if (stackTopWord == Const.boolexpr && (tokenType == Const.ID || tokenType == Const.integer || tokenType == Const.real_number || tokenData == Const.左括号))
+            else if (stackTopWord == ConstString.Boolexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.arithexpr);
-                wordStack.Push(Const.boolop);
-                wordStack.Push(Const.arithexpr);
+                wordStack.Push(ConstString.Arithexpr);
+                wordStack.Push(ConstString.Boolop);
+                wordStack.Push(ConstString.Arithexpr);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.boolexpr);
+                Output(ConstString.Boolexpr);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.boolexpr));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Boolexpr));
             }
-            else if (stackTopWord == Const.boolop && tokenType == Const.relation_operator)
+            else if (stackTopWord == ConstString.Boolop && tokenType == ConstString.RelationOperator)
             {
                 wordStack.Pop();
                 wordStack.Push(tokenData);
                 PrintSpace(_llSearchCounter);
-                Output(Const.boolop);
+                Output(ConstString.Boolop);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.boolop));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Boolop));
             }
-            else if (stackTopWord == Const.arithexpr && (tokenType == Const.integer || tokenType == Const.real_number || tokenType == Const.ID || tokenData == Const.左括号))
+            else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenType == ConstString.Id || tokenData == ConstString.左括号))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.arithexprprime);
-                wordStack.Push(Const.multexpr);
+                wordStack.Push(ConstString.Arithexprprime);
+                wordStack.Push(ConstString.Multexpr);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.arithexpr);
+                Output(ConstString.Arithexpr);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.arithexpr));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Arithexpr));
             }
-            else if (stackTopWord == Const.arithexprprime && tokenData == Const.加号)
+            else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.加号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.arithexprprime);
-                wordStack.Push(Const.multexpr);
-                wordStack.Push(Const.加号);
+                wordStack.Push(ConstString.Arithexprprime);
+                wordStack.Push(ConstString.Multexpr);
+                wordStack.Push(ConstString.加号);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.arithexprprime);
+                Output(ConstString.Arithexprprime);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.arithexprprime));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Arithexprprime));
             }
-            else if (stackTopWord == Const.arithexprprime && tokenData == Const.减号)
+            else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.减号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.arithexprprime);
-                wordStack.Push(Const.multexpr);
-                wordStack.Push(Const.减号);
+                wordStack.Push(ConstString.Arithexprprime);
+                wordStack.Push(ConstString.Multexpr);
+                wordStack.Push(ConstString.减号);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.arithexprprime);
+                Output(ConstString.Arithexprprime);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.arithexprprime));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Arithexprprime));
             }
-            else if (stackTopWord == Const.arithexprprime && (tokenType == Const.relation_operator || tokenData == Const.右括号 || tokenData == Const.分号))
+            else if (stackTopWord == ConstString.Arithexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
                 wordStack.Pop();
                 PrintSpace(_llSearchCounter);
-                Output(Const.arithexprprime空);
+                Output(ConstString.Arithexprprime空);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.arithexprprime));
-                semanticList.AddLast(new Token(Const.end_terminal, Const.arithexprprime空));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Arithexprprime));
+                semanticList.AddLast(new Token(ConstString.EndTerminal, ConstString.Arithexprprime空));
             }
-            else if (stackTopWord == Const.multexpr && (tokenType == Const.ID || tokenType == Const.integer || tokenType == Const.real_number || tokenData == Const.左括号))
+            else if (stackTopWord == ConstString.Multexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.multexprprime);
-                wordStack.Push(Const.simpleexpr);
-                PrintSpace(_llSearchCounter);
-                _llSearchCounter++;
-                Output(Const.multexpr);
-                Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.multexpr));
-            }
-            else if (stackTopWord == Const.multexprprime && tokenData == Const.乘号)
-            {
-                wordStack.Pop();
-                wordStack.Push(Const.multexprprime);
-                wordStack.Push(Const.simpleexpr);
-                wordStack.Push(Const.乘号);
+                wordStack.Push(ConstString.Multexprprime);
+                wordStack.Push(ConstString.Simpleexpr);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.multexprprime);
+                Output(ConstString.Multexpr);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.multexprprime));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Multexpr));
             }
-            else if (stackTopWord == Const.multexprprime && tokenData == Const.除号)
+            else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.乘号)
             {
                 wordStack.Pop();
-                wordStack.Push(Const.multexprprime);
-                wordStack.Push(Const.simpleexpr);
-                wordStack.Push(Const.除号);
+                wordStack.Push(ConstString.Multexprprime);
+                wordStack.Push(ConstString.Simpleexpr);
+                wordStack.Push(ConstString.乘号);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.multexprprime);
+                Output(ConstString.Multexprprime);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.multexprprime));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Multexprprime));
             }
-            else if (stackTopWord == Const.multexprprime && (tokenType == Const.relation_operator || tokenData == Const.加号 || tokenData == Const.减号 || tokenData == Const.右括号 || tokenData == Const.分号))
+            else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.除号)
             {
                 wordStack.Pop();
-                PrintSpace(_llSearchCounter);
-                Output(Const.multexprprime空);
-                Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.multexprprime));
-                semanticList.AddLast(new Token(Const.end_terminal, Const.multexprprime空));
-            }
-            else if (stackTopWord == Const.simpleexpr && tokenType == Const.ID)
-            {
-                wordStack.Pop();
-                wordStack.Push(Const.ID);
+                wordStack.Push(ConstString.Multexprprime);
+                wordStack.Push(ConstString.Simpleexpr);
+                wordStack.Push(ConstString.除号);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.simpleexpr);
+                Output(ConstString.Multexprprime);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.simpleexpr));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Multexprprime));
             }
-            else if (stackTopWord == Const.simpleexpr && (tokenType == Const.integer || tokenType == Const.real_number))
+            else if (stackTopWord == ConstString.Multexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.加号 || tokenData == ConstString.减号 || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.Num);
+                PrintSpace(_llSearchCounter);
+                Output(ConstString.Multexprprime空);
+                Output(Environment.NewLine);
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Multexprprime));
+                semanticList.AddLast(new Token(ConstString.EndTerminal, ConstString.Multexprprime空));
+            }
+            else if (stackTopWord == ConstString.Simpleexpr && tokenType == ConstString.Id)
+            {
+                wordStack.Pop();
+                wordStack.Push(ConstString.Id);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.simpleexpr);
+                Output(ConstString.Simpleexpr);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.simpleexpr));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Simpleexpr));
             }
-            else if (stackTopWord == Const.simpleexpr && tokenData == Const.左括号)
+            else if (stackTopWord == ConstString.Simpleexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
                 wordStack.Pop();
-                wordStack.Push(Const.右括号);
-                wordStack.Push(Const.arithexpr);
-                wordStack.Push(Const.左括号);
+                wordStack.Push(ConstString.Num);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
-                Output(Const.simpleexpr);
+                Output(ConstString.Simpleexpr);
                 Output(Environment.NewLine);
-                semanticList.AddLast(new Token(Const.non_terminal, Const.simpleexpr));
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Simpleexpr));
             }
-            else if (stackTopWord == Const.ID && tokenType == Const.ID)
+            else if (stackTopWord == ConstString.Simpleexpr && tokenData == ConstString.左括号)
+            {
+                wordStack.Pop();
+                wordStack.Push(ConstString.右括号);
+                wordStack.Push(ConstString.Arithexpr);
+                wordStack.Push(ConstString.左括号);
+                PrintSpace(_llSearchCounter);
+                _llSearchCounter++;
+                Output(ConstString.Simpleexpr);
+                Output(Environment.NewLine);
+                semanticList.AddLast(new Token(ConstString.NonTerminal, ConstString.Simpleexpr));
+            }
+            else if (stackTopWord == ConstString.Id && tokenType == ConstString.Id)
             {
                 wordStack.Pop();
                 PrintSpace(_llSearchCounter);
-                Output(Const.ID);
+                Output(ConstString.Id);
                 Output(Environment.NewLine);
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
             }
-            else if (stackTopWord == Const.Num && (tokenType == Const.integer || tokenType == Const.real_number))
+            else if (stackTopWord == ConstString.Num && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
                 wordStack.Pop();
                 PrintSpace(_llSearchCounter);
-                Output(Const.Num);
+                Output(ConstString.Num);
                 Output(Environment.NewLine);
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
@@ -346,34 +346,34 @@ namespace Compiler
                 wordStack.Pop();
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
-                if (tokenType == Const.@operator || tokenType == Const.relation_operator)
+                if (tokenType == ConstString.Operator || tokenType == ConstString.RelationOperator)
                 {
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
                 }
-                else if (tokenData == Const.左括号 || tokenData == Const.左大括号)
+                else if (tokenData == ConstString.左括号 || tokenData == ConstString.左大括号)
                 {
                     sum.Push(_llSearchCounter);
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
                 }
-                else if (tokenData == Const.右大括号 || tokenData == Const.分号 || tokenData == Const.右括号)
+                else if (tokenData == ConstString.右大括号 || tokenData == ConstString.分号 || tokenData == ConstString.右括号)
                 {
                     _llSearchCounter = sum.Pop();
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
                 }
-                else if (tokenData == Const.then)
+                else if (tokenData == ConstString.Then)
                 {
                     _llSearchCounter = sum.Peek();
                     PrintSpace(_llSearchCounter);
                     Output(tokenData);
                     Output(Environment.NewLine);
                 }
-                else if (tokenData == Const.@else)
+                else if (tokenData == ConstString.Else)
                 {
                     _llSearchCounter = sum.Pop();
                     PrintSpace(_llSearchCounter);

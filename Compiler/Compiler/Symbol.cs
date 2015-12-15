@@ -7,49 +7,29 @@ namespace Compiler
         public int Data1 { get; set; }
         public float Data2 { get; set; }
         public Symbol Next { get; set; }
-
-        public int Hang { get; set; }
-        public int Lie { get; set; }
+        public int LineNumber { get; set; }
+        public int ColumnNumber { get; set; }
 
         public Symbol()
         {
+            Name = null;
+            Type = null;
             Data1 = 0;
             Data2 = 0F;
             Next = null;
-            Hang = -1;
-            Lie = -1;
+            LineNumber = -1;
+            ColumnNumber = -1;
         }
 
-        public Symbol(string i, int a, int b, int c)
+        public Symbol(string name, int a, int b)
         {
-            Name = i;
-            Type = "int";
-            Data1 = a;
+            Name = name;
+            Type = null;
+            Data1 = 0;
             Data2 = 0F;
             Next = null;
-
-            Hang = b;
-            Lie = c;
-        }
-
-        public Symbol(string i, float a, int b, int c)
-        {
-            Name = i;
-            Type = "real";
-            Data1 = (int)a;
-            Data2 = b;
-            Next = null;
-
-            Hang = b;
-            Lie = c;
-        }
-
-        public Symbol(string i, int a, int b)
-        {
-            Name = i;
-            Hang = a;
-            Lie = b;
-            Next = null;
+            LineNumber = a;
+            ColumnNumber = b;
         }
     }
 }
