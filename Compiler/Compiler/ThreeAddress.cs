@@ -155,7 +155,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO IF !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.If));
                 Output(Environment.NewLine);
             }
 
@@ -165,7 +165,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO ( !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.左括号));
                 Output(Environment.NewLine);
             }
 
@@ -187,7 +187,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO Boolexpr !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.Boolexpr));
                 Output(Environment.NewLine);
             }
 
@@ -197,7 +197,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO ) !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.右括号));
                 Output(Environment.NewLine);
             }
 
@@ -207,7 +207,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO then !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.Then));
                 Output(Environment.NewLine);
             }
 
@@ -218,7 +218,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!!NO stmt!!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.Stmt));
                 Output(Environment.NewLine);
             }
 
@@ -231,7 +231,7 @@ namespace Compiler
             }
             else
             {
-                Output("ifstmt_go ERROR!!! NO else !!!");
+                Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.Else));
                 Output(Environment.NewLine);
             }
 
@@ -317,16 +317,17 @@ namespace Compiler
             }
             else
             {
-                Output("whilestmt_go ERROR!!! NO while!!!");
+                Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.While));
                 Output(Environment.NewLine);
             }
+
             if (semanticList.First.Value.Data == ConstString.左括号)
             {
                 semanticList.RemoveFirst();
             }
             else
             {
-                Output("whilestmt_go ERROR!!! NO (!!!");
+                Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.左括号));
                 Output(Environment.NewLine);
             }
 
@@ -347,7 +348,7 @@ namespace Compiler
             }
             else
             {
-                Output("whilestmt_go ERROR!!! NO boolexpr!!!");
+                Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.Boolexpr));
                 Output(Environment.NewLine);
             }
             if (semanticList.First.Value.Data == ConstString.右括号)
@@ -356,7 +357,7 @@ namespace Compiler
             }
             else
             {
-                Output("whilestmt_go ERROR!!! NO )");
+                Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.右括号));
                 Output(Environment.NewLine);
             }
 
@@ -367,7 +368,7 @@ namespace Compiler
             }
             else
             {
-                Output("whilestmt_go ERROR!!! NO stmt !!!");
+                Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.Stmt));
                 Output(Environment.NewLine);
             }
 
