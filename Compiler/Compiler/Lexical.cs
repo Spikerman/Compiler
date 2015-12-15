@@ -8,9 +8,9 @@ namespace Compiler
     public static class Lexical
     {
         private static string _outputString = string.Empty;
-        public const char Lf = '\n';
+        private const char Lf = '\n';
 
-        public static void Output(string content)
+        private static void Output(string content)
         {
             _outputString += content;
         }
@@ -181,93 +181,6 @@ namespace Compiler
             }
 
             return tokenList;
-        }
-
-        public static bool IsId(string str)
-        {
-            if (IsExponent(str))
-            {
-                return false;
-            }
-            bool key = true;
-            for (int i = 1; i < str.Length; i++)
-            {
-                if (IsChar(str[i]) == false && IsDigit(str[i]) == false)
-                {
-                    key = false;
-                }
-            }
-            return key && IsChar(str[0]);
-        }
-
-        public static bool IsComment(string out1)
-        {
-            return out1[0] == '/' && out1[1] == '/';
-        }
-
-        public static bool IsIntnum(string out1)
-        {
-            bool key = out1 != string.Empty;
-            foreach (char t in out1)
-            {
-                if (IsDigit(t) == false)
-                {
-                    key = false;
-                }
-            }
-            return key;
-        }
-
-        public static bool IsReal(string out1)
-        {
-            string str1 = string.Empty;
-            string str2 = string.Empty;
-            string str3 = string.Empty;
-
-            bool flag1 = false;
-            bool flag2 = false;
-
-            foreach (char t in out1)
-            {
-                if ((t == 'E' || t == 'e' || t == '.') && flag1 == false)
-                {
-                    flag1 = true;
-                }
-                else if ((t == 'E' || t == 'e' || t == '.') && flag1)
-                {
-                    flag2 = true;
-                }
-
-                if (flag1 == false)
-                {
-                    str1 = str1 + t;
-                }
-                else if (flag2 == false)
-                {
-                    str2 = str2 + t;
-                }
-                else
-                {
-                    str3 = str3 + t;
-                }
-            }
-            if (flag1 == false)
-            {
-                return false;
-            }
-            if (flag2 == false)
-            {
-                if (IsIntnum(str1) && (IsFraction(str2) || IsExponent(str2)))
-                {
-                    return true;
-                }
-                return false;
-            }
-            if (IsIntnum(str1) && IsFraction(str2) && IsExponent(str3))
-            {
-                return true;
-            }
-            return false;
         }
 
         public static LinkedList<Token> GiveType(LinkedList<Token> tokenList, LinkedList<Symbol> symbolTable)
@@ -454,17 +367,104 @@ namespace Compiler
             return _outputString;
         }
 
-        public static bool IsDigit(char ch)
+        private static bool IsId(string str)
+        {
+            if (IsExponent(str))
+            {
+                return false;
+            }
+            bool key = true;
+            for (int i = 1; i < str.Length; i++)
+            {
+                if (IsChar(str[i]) == false && IsDigit(str[i]) == false)
+                {
+                    key = false;
+                }
+            }
+            return key && IsChar(str[0]);
+        }
+
+        private static bool IsComment(string out1)
+        {
+            return out1[0] == '/' && out1[1] == '/';
+        }
+
+        private static bool IsIntnum(string out1)
+        {
+            bool key = out1 != string.Empty;
+            foreach (char t in out1)
+            {
+                if (IsDigit(t) == false)
+                {
+                    key = false;
+                }
+            }
+            return key;
+        }
+
+        private static bool IsReal(string out1)
+        {
+            string str1 = string.Empty;
+            string str2 = string.Empty;
+            string str3 = string.Empty;
+
+            bool flag1 = false;
+            bool flag2 = false;
+
+            foreach (char t in out1)
+            {
+                if ((t == 'E' || t == 'e' || t == '.') && flag1 == false)
+                {
+                    flag1 = true;
+                }
+                else if ((t == 'E' || t == 'e' || t == '.') && flag1)
+                {
+                    flag2 = true;
+                }
+
+                if (flag1 == false)
+                {
+                    str1 = str1 + t;
+                }
+                else if (flag2 == false)
+                {
+                    str2 = str2 + t;
+                }
+                else
+                {
+                    str3 = str3 + t;
+                }
+            }
+            if (flag1 == false)
+            {
+                return false;
+            }
+            if (flag2 == false)
+            {
+                if (IsIntnum(str1) && (IsFraction(str2) || IsExponent(str2)))
+                {
+                    return true;
+                }
+                return false;
+            }
+            if (IsIntnum(str1) && IsFraction(str2) && IsExponent(str3))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private static bool IsDigit(char ch)
         {
             return ch >= '0' && ch <= '9';
         }
 
-        public static bool IsChar(char ch)
+        private static bool IsChar(char ch)
         {
             return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
         }
 
-        public static bool IsExponent(string out1)
+        private static bool IsExponent(string out1)
         {
             if (out1.Length < 2)
             {
@@ -488,7 +488,7 @@ namespace Compiler
             return true;
         }
 
-        public static bool IsFraction(string out1)
+        private static bool IsFraction(string out1)
         {
             bool key = true;
             for (int i = 1; i < out1.Length; i++)

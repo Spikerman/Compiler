@@ -87,6 +87,7 @@ namespace Compiler
                 return;
             }
             LinkedList<Token> tokenList = await Lexical.Separate(CodeFile);
+            //SymbolTable在这里被增删内容
             TokenListWithType = Lexical.GiveType(tokenList, SymbolTable);
         }
 
@@ -97,7 +98,26 @@ namespace Compiler
 
         private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            演示TextBox.Text = LlParser.LLparser(TokenListWithType, SemanticList);
+            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
+            //所以复制一份：
+            LinkedList<Token> in1 = new LinkedList<Token>();
+            foreach (Token item in TokenListWithType)
+            {
+                in1.AddLast(item);
+            }
+            //SemanticList在这里产生。
+            演示TextBox.Text = LlParser.Parser(in1, SemanticList);
+        }
+
+        private void 三地址AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            //先在函数外面复制一份
+            foreach (Token item in SemanticList)
+            {
+                ThreeAddressList.AddLast(item);
+            }
+            int i = 0;
+            演示TextBox.Text = ThreeAddress.semantic_go(ThreeAddressList, ref i);
         }
     }
 }

@@ -75,6 +75,7 @@
                     <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>
                     <AppBarButton Icon="Find" Label="词法分析" x:Name="词法分析AppBarButton" Click="词法分析AppBarButton_Click"/>
                     <AppBarButton Icon="Find" Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click"/>
+                    <AppBarButton Icon="Find" Label="三地址" x:Name="三地址AppBarButton" Click="三地址AppBarButton_Click"/>
                     <AppBarButton Icon="OpenLocal" Label="xxx" x:Name="xxxAppBarButton">
                         <AppBarButton.Flyout>
                             <Flyout>

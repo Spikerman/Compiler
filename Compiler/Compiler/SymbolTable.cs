@@ -6,11 +6,11 @@ namespace Compiler
 {
     public static class SymbolTable
     {
-        public static string OutputString = string.Empty;
+        private static string _outputString = string.Empty;
 
-        public static void Output(string content)
+        private static void Output(string content)
         {
-            OutputString += content;
+            _outputString += content;
         }
 
         public static void print_symbol_table(LinkedList<Symbol> symbolTable)
@@ -64,7 +64,7 @@ namespace Compiler
             Output(Environment.NewLine);
         }
 
-        public static void init_symbol_table(Symbol symbol1, LinkedList<Symbol> symbolTable)
+        public static void init_symbol_table(Symbol symbol, LinkedList<Symbol> symbolTable)
         {
             int i = symbolTable.Count;
             bool flag = true;
@@ -73,13 +73,13 @@ namespace Compiler
                 Symbol temp = symbolTable.First.Value;
                 string name1 = temp.Name;
                 Symbol p = temp;
-                if (symbol1.Name == name1)
+                if (symbol.Name == name1)
                 {
                     while (p.Next != null)
                     {
                         p = p.Next;
                     }
-                    p.Next = symbol1;
+                    p.Next = symbol;
                     flag = false;
                 }
                 symbolTable.RemoveFirst();
@@ -87,7 +87,7 @@ namespace Compiler
             }
             if (flag)
             {
-                symbolTable.AddLast(symbol1);
+                symbolTable.AddLast(symbol);
             }
         }
 
