@@ -363,7 +363,7 @@ namespace Compiler
             return true;
         }
 
-        public static string LLparser(LinkedList<Token> in1, LinkedList<Token> semanticList)
+        public static string LLparser(LinkedList<Token> inputTokenList, LinkedList<Token> semanticList)
         {
             _outputString = string.Empty;
             bool key = true;
@@ -371,6 +371,13 @@ namespace Compiler
 
             Stack<string> word = StackInit();
 
+            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
+            //所以复制一份：
+            LinkedList<Token> in1 = new LinkedList<Token>();
+            foreach (var item in inputTokenList)
+            {
+                in1.AddLast(item);
+            }
             while (word.Count > 0 && in1.Count > 0)
             {
                 bool flag = LlSearch(word, in1, sum, semanticList);

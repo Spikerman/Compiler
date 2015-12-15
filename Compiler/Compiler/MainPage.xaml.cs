@@ -97,7 +97,6 @@ namespace Compiler
 
         private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
             演示TextBox.Text = LlParser.LLparser(TokenListWithType, SemanticList);
         }
     }
