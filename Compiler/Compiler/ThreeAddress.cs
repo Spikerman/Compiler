@@ -491,7 +491,7 @@ namespace Compiler
             }
             else
             {
-                Output("calexpr_go ERROR!!! NO arithexprprime!!!");
+                Output(string.Format(ErrorDisplay, nameof(calexpr_go), ConstString.Arithexprprime));
                 Output(Environment.NewLine);
             }
             if (cal != string.Empty)
@@ -577,7 +577,7 @@ namespace Compiler
                 }
                 else
                 {
-                    Output("calexprim_go ERROR!!! NO arithexprprime!!!");
+                    Output(string.Format(ErrorDisplay, nameof(calexprim_go), ConstString.Arithexprprime));
                     Output(Environment.NewLine);
                 }
             }
@@ -621,7 +621,7 @@ namespace Compiler
             }
             else
             {
-                Output("multexpr_go ERROR!!! NO multexprprime !!!");
+                Output(string.Format(ErrorDisplay, nameof(multexpr_go), ConstString.Multexprprime));
                 Output(Environment.NewLine);
             }
 
@@ -681,13 +681,13 @@ namespace Compiler
                     }
                     else
                     {
-                        Output("multexprim_go ERROR!!! NO multexprprime !!!");
+                        Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Multexprprime));
                         Output(Environment.NewLine);
                     }
                 }
                 else
                 {
-                    Output("multexprim_go ERROR!!! NO simpleexpr !!!");
+                    Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Simpleexpr));
                     Output(Environment.NewLine);
                 }
                 if (cal1 != string.Empty)
@@ -762,13 +762,13 @@ namespace Compiler
                     }
                     else
                     {
-                        Output("simexpr_go ERROR!!!NO ) !!!");
+                        Output(string.Format(ErrorDisplay, nameof(simexpr_go), ConstString.右括号));
                         Output(Environment.NewLine);
                     }
                 }
                 else
                 {
-                    Output("simexpr_go ERROR !!! NO arithexpr !!!");
+                    Output(string.Format(ErrorDisplay, nameof(simexpr_go), ConstString.Arithexpr));
                     Output(Environment.NewLine);
                 }
             }
