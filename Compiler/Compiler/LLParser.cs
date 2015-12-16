@@ -29,7 +29,7 @@ namespace Compiler
             }
             if (key)
             {
-                Output("Graduation:!!!  LLparser Pass and the program is 合法 !!! ");
+                Output("Congratulations:!!!  LLparser Pass and the program is 合法 !!! ");
                 Output(Environment.NewLine);
             }
 

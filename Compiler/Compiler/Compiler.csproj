@@ -98,7 +98,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Const.cs" />
-    <Compile Include="DataModel\Runtime\TreeItemViewModel.cs" />
     <Compile Include="DataModel\View\NavLink.cs" />
     <Compile Include="Lexical.cs" />
     <Compile Include="LlParser.cs" />
