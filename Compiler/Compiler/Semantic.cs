@@ -13,20 +13,6 @@ namespace Compiler
             _outputString += content;
         }
 
-        public static int Getint(string num)
-        {
-            int l = num.Length;
-            int counter = 1;
-            int sum = 0;
-            for (int i = l - 1; i >= 0; i--)
-            {
-                char ch = num[i];
-                sum = sum + (ch - 48) * counter;
-                counter = counter * 10;
-            }
-            return sum;
-        }
-
         public static string semantic_go(LinkedList<Token> semanticList, LinkedList<Symbol> symbolTable)
         {
             if (semanticList.Count > 0)
@@ -720,7 +706,7 @@ namespace Compiler
             }
             else if (semanticList.First.Value.Type == "integer" || semanticList.First.Value.Type == "real_number")
             {
-                a = Getint(semanticList.First.Value.Data);
+                a = int.Parse(semanticList.First.Value.Data);
                 semanticList.RemoveFirst();
             }
             else if (semanticList.First.Value.Data == ConstString.左括号)
