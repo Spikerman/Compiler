@@ -119,7 +119,6 @@ namespace Compiler
 
         private static void stmt_go(LinkedList<Token> semanticList, LinkedList<Symbol> symbolTable)
         {
-            LinkedList<Token> temp_list = new LinkedList<Token>();
             if (semanticList.First.Value.Data == ConstString.Ifstmt)
             {
                 semanticList.RemoveFirst();
@@ -128,13 +127,13 @@ namespace Compiler
             else if (semanticList.First.Value.Data == ConstString.Whilestmt)
             {
                 semanticList.RemoveFirst();
-                temp_list = new LinkedList<Token>(semanticList);
-                bool k = whilestmt_go(temp_list, symbolTable);
+                LinkedList<Token> tempList = new LinkedList<Token>(semanticList);
+                bool k = whilestmt_go(tempList, symbolTable);
 
                 while (k)
                 {
-                    temp_list = new LinkedList<Token>(semanticList);
-                    k = whilestmt_go(temp_list, symbolTable);
+                    tempList = new LinkedList<Token>(semanticList);
+                    k = whilestmt_go(tempList, symbolTable);
                 }
                 if (!k)
                 {
@@ -369,7 +368,7 @@ namespace Compiler
             if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
-                if (k == true)
+                if (k)
                 {
                     stmt_go(semanticList, symbolTable);
                 }
