@@ -13,14 +13,10 @@ namespace Compiler
             _outputString += content;
         }
 
-        public static void print_symbol_table(LinkedList<Symbol> symbolTable)
+        public static string print_symbol_table(LinkedList<Symbol> symbolTable)
         {
-            for (int s = 0; s < symbolTable.Count; s++)
+            foreach (var tmp in symbolTable)
             {
-                Symbol tmp = symbolTable.First.Value;
-                symbolTable.RemoveFirst();
-                symbolTable.AddLast(tmp);
-
                 Output("[");
                 Output(tmp.LineNumber.ToString());
                 Output(",");
@@ -33,7 +29,7 @@ namespace Compiler
 
                 while (p != null)
                 {
-                    if (p.Type == "int")
+                    if (p.Type == ConstString.Int)
                     {
                         Output(p.Type);
                         Output(" ");
@@ -47,7 +43,7 @@ namespace Compiler
                         Output(p.Data2.ToString(CultureInfo.InvariantCulture));
                         Output(" ");
                     }
-                    else if (p.Type == "")
+                    else if (string.IsNullOrEmpty(p.Type))
                     {
                         Output("NULL ");
                     }
@@ -62,6 +58,7 @@ namespace Compiler
 
             Output("SymbolTable END");
             Output(Environment.NewLine);
+            return _outputString;
         }
 
         public static void init_symbol_table(Symbol symbol, LinkedList<Symbol> symbolTable)

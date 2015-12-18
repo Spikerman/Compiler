@@ -320,7 +320,6 @@ namespace Compiler
                 Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.While));
                 Output(Environment.NewLine);
             }
-
             if (semanticList.First.Value.Data == ConstString.左括号)
             {
                 semanticList.RemoveFirst();
@@ -360,7 +359,6 @@ namespace Compiler
                 Output(string.Format(ErrorDisplay, nameof(whilestmt_go), ConstString.右括号));
                 Output(Environment.NewLine);
             }
-
             if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
@@ -452,7 +450,6 @@ namespace Compiler
                 Output("boolexpr_go ERROR !!! boolop ERROR !!!");
                 Output(Environment.NewLine);
             }
-
             Output(counter.ToString());
             counter++;
             Output(" ");

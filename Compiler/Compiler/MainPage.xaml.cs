@@ -119,5 +119,18 @@ namespace Compiler
             int i = 0;
             演示TextBox.Text = ThreeAddress.semantic_go(ThreeAddressList, ref i);
         }
+
+        private void 属性文法AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            //先在函数外面复制一份
+            LinkedList<Token> in1 = new LinkedList<Token>();
+            foreach (Token item in SemanticList)
+            {
+                in1.AddLast(item);
+            }
+            演示TextBox.Text = Semantic.semantic_go(in1, SymbolTable);
+            演示TextBox.Text += Environment.NewLine;
+            演示TextBox.Text += Compiler.SymbolTable.print_symbol_table(SymbolTable);
+        }
     }
 }

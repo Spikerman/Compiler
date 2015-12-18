@@ -412,5 +412,10 @@ namespace Compiler
         {
             _outputString += content;
         }
+
+        private static void 出栈入栈(Stack<string> stack)
+        {
+            
+        }
     }
 }
