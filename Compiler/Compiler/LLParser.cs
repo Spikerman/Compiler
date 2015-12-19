@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Compiler.DataModel.Runtime;
 
 namespace Compiler
 {
-    public static class LlParser
+    public class LlParser
     {
 
         private static int _llSearchCounter;
         private static string _outputString = string.Empty;
+        private static ObservableCollection<TreeItemViewModel> _treeItems;
 
-        public static string Parser(LinkedList<Token> inputTokenList, LinkedList<Token> semanticList)
+        public static string Parser(LinkedList<Token> inputTokenList, LinkedList<Token> semanticList, ObservableCollection<TreeItemViewModel> treeItems)
         {
+            _treeItems = treeItems;
             _outputString = string.Empty;
             bool key = true;
             Stack<int> sum = new Stack<int>();
 
-            Stack<string> word = StackInit();
+            Stack<TreeItemViewModel> word = StackInit();
 
             while (word.Count > 0 && inputTokenList.Count > 0)
             {
@@ -36,18 +40,21 @@ namespace Compiler
             return _outputString;
         }
 
-        private static Stack<string> StackInit()
+        private static Stack<TreeItemViewModel> StackInit()
         {
-            //Stack<TreeItemViewModel> word = new Stack<TreeItemViewModel>();
-            Stack<string> word = new Stack<string>();
-            word.Push(ConstString.Program);
-
+            Stack<TreeItemViewModel> word = new Stack<TreeItemViewModel>();
+            TreeItemViewModel child = new TreeItemViewModel
+            {
+                Text = ConstString.Program
+            };
+            word.Push(child);
+            _treeItems.Add(child);
             return word;
         }
 
-        private static bool LlSearch(Stack<string> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
+        private static bool LlSearch(Stack<TreeItemViewModel> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
         {
-            string stackTopWord = wordStack.Peek();
+            string stackTopWord = wordStack.Peek().Text;
             Token tokenTop = tokenList.First.Value;
             string tokenData = tokenTop.Data;
             string tokenType = tokenTop.Type;
@@ -389,12 +396,18 @@ namespace Compiler
             _outputString += content;
         }
 
-        private static void 出栈入栈(Stack<string> wordStack, string[] 产生式体)
+        private static void 出栈入栈(Stack<TreeItemViewModel> wordStack, string[] 产生式体)
         {
-            wordStack.Pop();
+            TreeItemViewModel node = wordStack.Pop();
             for (int i = 产生式体.Length - 1; i >= 0; i--)
             {
-                wordStack.Push(产生式体[i]);
+                TreeItemViewModel child = new TreeItemViewModel
+                {
+                    Text = 产生式体[i]
+                };
+
+                wordStack.Push(child);
+                node.Children.Insert(0, child);
             }
         }
     }

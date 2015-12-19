@@ -70,6 +70,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <Frame x:Name="ScenarioFrame" Grid.Row="1"/>
                 <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"/>
                 <controls:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="2">
                     <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>

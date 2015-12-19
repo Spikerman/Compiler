@@ -16,7 +16,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Compiler.DataModel.Runtime;
 using Compiler.DataModel.View;
+using Compiler.UI.Controls;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -27,11 +29,7 @@ namespace Compiler
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public StorageFile CodeFile { get; set; }
-        public LinkedList<Symbol> SymbolTable { get; } = new LinkedList<Symbol>();
-        public LinkedList<Token> TokenListWithType { get; set; }
-        public LinkedList<Token> SemanticList { get; } = new LinkedList<Token>();
-        public LinkedList<Token> ThreeAddressList { get; } = new LinkedList<Token>();
+        private readonly Singleton _instance = Singleton.Instance;
 
         public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>
         {
@@ -81,56 +79,56 @@ namespace Compiler
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
             };
             openPicker.FileTypeFilter.Add(".txt");
-            CodeFile = await openPicker.PickSingleFileAsync();
-            if (CodeFile == null)
+            _instance.CodeFile = await openPicker.PickSingleFileAsync();
+            if (_instance.CodeFile == null)
             {
                 return;
             }
-            LinkedList<Token> tokenList = await Lexical.Separate(CodeFile);
+            LinkedList<Token> tokenList = await Lexical.Separate(_instance.CodeFile);
             //SymbolTable在这里被增删内容
-            TokenListWithType = Lexical.GiveType(tokenList, SymbolTable);
+            _instance.TokenListWithType = Lexical.GiveType(tokenList, _instance.SymbolTable);
         }
 
         private void 词法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            演示TextBox.Text = Lexical.TokenPrint(TokenListWithType);
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
+            演示TextBox.Text = Lexical.TokenPrint(_instance.TokenListWithType);
         }
 
         private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
-            //所以复制一份：
-            LinkedList<Token> in1 = new LinkedList<Token>();
-            foreach (Token item in TokenListWithType)
-            {
-                in1.AddLast(item);
-            }
-            //SemanticList在这里产生。
-            演示TextBox.Text = LlParser.Parser(in1, SemanticList);
+            ScenarioFrame.Visibility = Visibility.Visible;
+            演示TextBox.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Navigate(typeof(TreeViewPage));
         }
 
         private void 三地址AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
             //先在函数外面复制一份
-            foreach (Token item in SemanticList)
+            foreach (Token item in _instance.SemanticList)
             {
-                ThreeAddressList.AddLast(item);
+                _instance.ThreeAddressList.AddLast(item);
             }
             int i = 0;
-            演示TextBox.Text = ThreeAddress.semantic_go(ThreeAddressList, ref i);
+            演示TextBox.Text = ThreeAddress.semantic_go(_instance.ThreeAddressList, ref i);
         }
 
         private void 属性文法AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
             //先在函数外面复制一份
             LinkedList<Token> in1 = new LinkedList<Token>();
-            foreach (Token item in SemanticList)
+            foreach (Token item in _instance.SemanticList)
             {
                 in1.AddLast(item);
             }
-            演示TextBox.Text = Semantic.semantic_go(in1, SymbolTable);
+            演示TextBox.Text = Semantic.semantic_go(in1, _instance.SymbolTable);
             演示TextBox.Text += Environment.NewLine;
-            演示TextBox.Text += Compiler.SymbolTable.print_symbol_table(SymbolTable);
+            演示TextBox.Text += Compiler.SymbolTable.print_symbol_table(_instance.SymbolTable);
         }
     }
 }
