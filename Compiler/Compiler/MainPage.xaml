@@ -21,7 +21,7 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    <Grid Margin="-48,0,0,0">
+    <Grid Margin="1,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="68*"/>
