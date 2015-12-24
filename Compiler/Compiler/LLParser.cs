@@ -341,6 +341,144 @@ namespace Compiler
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
             }
+            else if (stackTopWord == ConstString.Boolop && (tokenType == ConstString.Id || tokenType == ConstString.Num || tokenType == ConstString.右括号))
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Program && tokenType == ConstString.EndTerminal)
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Stmts && tokenType == ConstString.右大括号)
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Boolexpr && tokenType == ConstString.右括号)
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.RelationOperator || tokenType == ConstString.分号 || tokenType == ConstString.右括号))
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Multexpr && (tokenType == ConstString.加号 || tokenType == ConstString.减号))
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Simpleexpr && (tokenType == ConstString.乘号 || tokenType == ConstString.除号))
+            {
+                wordStack.Pop();
+                Output("there is a error,but that's ok.We can go on");
+                Output(Environment.NewLine);
+            }
+            else if (stackTopWord == ConstString.Program && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator
+                || tokenType == ConstString.减号 || tokenType == ConstString.乘号 || tokenType == ConstString.除号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Ifstmt && (tokenType == ConstString.左大括号 || tokenType == ConstString.While || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator
+                || tokenType == ConstString.减号 || tokenType == ConstString.乘号 || tokenType == ConstString.除号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Whilestmt && (tokenType == ConstString.If || tokenType == ConstString.左大括号 || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator
+                || tokenType == ConstString.减号 || tokenType == ConstString.乘号 || tokenType == ConstString.除号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Assgstmt && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.左大括号
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator|| tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Stmt && (
+                tokenType == ConstString.Stmts空 || tokenType == ConstString.左大括号 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator
+                ||  tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Stmts && (
+                 tokenType == ConstString.Num || tokenType == ConstString.左大括号 || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator|| tokenType == ConstString.分号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Boolexpr && (tokenType == ConstString.If || tokenType == ConstString.左大括号 || tokenType == ConstString.While
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.RelationOperator || tokenType == ConstString.加号
+                || tokenType == ConstString.减号 || tokenType == ConstString.乘号 || tokenType == ConstString.除号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号
+                ))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Boolop && (tokenType == ConstString.If || tokenType == ConstString.左大括号 || tokenType == ConstString.While
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Operator|| tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.If || tokenType == ConstString.左大括号 || tokenType == ConstString.While
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Operator|| tokenType == ConstString.右大括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Arithexprprime && (tokenType == ConstString.If || tokenType == ConstString.左大括号 || tokenType == ConstString.While || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号
+                 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenType == ConstString.右大括号
+                ))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Multexpr && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.左大括号
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.RelationOperator
+                || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Multexprprime && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.左大括号
+                || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Simpleexpr && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.左大括号
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.RelationOperator || tokenData == ConstString.加号
+                || tokenData == ConstString.减号 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+            else if (stackTopWord == ConstString.Compoundstmt && (tokenType == ConstString.If || tokenType == ConstString.While || tokenType == ConstString.Id
+                || tokenType == ConstString.Stmts空 || tokenType == ConstString.Num || tokenType == ConstString.左括号 || tokenType == ConstString.RelationOperator || tokenType == ConstString.Operator
+                 || tokenType == ConstString.分号 || tokenType == ConstString.右大括号 ||
+                tokenType == ConstString.右括号))
+            {
+                tokenList.RemoveFirst();
+            }
+
+
+
             else if (stackTopWord == tokenData)
             {
                 wordStack.Pop();
