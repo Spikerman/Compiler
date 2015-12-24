@@ -29,11 +29,7 @@ namespace Compiler
         {
             InitializeComponent();
         }
-
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
-        }
+        
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -160,5 +156,6 @@ namespace Compiler
             output += endHtml;
             MainWebView.NavigateToString(output);
         }
+
     }
 }
