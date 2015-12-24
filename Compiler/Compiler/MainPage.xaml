@@ -21,75 +21,53 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
+    <Grid Margin="0">
+        <Grid.Background>
+            <ImageBrush Stretch="Uniform" ImageSource="Assets/SplashScreen.png" Opacity="0.4"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="68*"/>
+            <RowDefinition Height="965*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <WebView x:Name="MainWebView" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
+        <Frame x:Name="ScenarioFrame" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
+        <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="wideState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="641" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="splitView.DisplayMode" Value="CompactInline"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="narrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="splitView.DisplayMode" Value="CompactOverlay"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <SplitView Grid.Column="0" x:Name="splitView" IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="CompactOverlay">
-            <SplitView.Pane>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <ToggleButton x:Name="toggleButton" Style="{StaticResource SymbolButton}" BorderBrush="Red" BorderThickness="1" Click="HamburgerButton_Click" VerticalAlignment="Top" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
-                        <ToggleButton.Content>
-                            <FontIcon x:Name="Hamburger" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;"/>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-                    <TextBlock Grid.Row="0" Text="Compiler" x:Name="PaneHeader" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
-                    <ListView x:Name="NavLinksList" Margin="0,12,0,0" SelectionMode="None" Grid.Row="1" VerticalAlignment="Stretch" ItemClick="NavLinksList_ItemClick" IsItemClickEnabled="True" ItemsSource="{x:Bind NavLinks}" ItemTemplate="{StaticResource NavLinkItemTemplate}" />
-                    <!--<StackPanel Orientation="Horizontal" Grid.Row="2" Margin="14,24,0,24">
-                        <SymbolIcon Symbol="Setting" />
-                        <TextBlock Text="Settings" Margin="24,0,0,0" VerticalAlignment="Center"/>
-                    </StackPanel>-->
-                </Grid>
-            </SplitView.Pane>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"/>
-                <controls:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="2">
-                    <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>
-                    <AppBarButton Icon="Find" Label="词法分析" x:Name="词法分析AppBarButton" Click="词法分析AppBarButton_Click"/>
-                    <AppBarButton Icon="Find" Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click"/>
-                    <AppBarButton Icon="Find" Label="属性文法" x:Name="属性文法AppBarButton" Click="属性文法AppBarButton_Click"/>
-                    <AppBarButton Icon="Find" Label="三地址" x:Name="三地址AppBarButton" Click="三地址AppBarButton_Click"/>
-                    <AppBarButton Icon="OpenLocal" Label="xxx" x:Name="xxxAppBarButton">
-                        <AppBarButton.Flyout>
-                            <Flyout>
-                                <ListView x:Name="xxxListView" SelectionMode="None"/>
-                            </Flyout>
-                        </AppBarButton.Flyout>
-                    </AppBarButton>
-                    <AppBarSeparator/>
-                    <controls:DynamicCommandBar.SecondaryCommands>
-                        <AppBarButton Icon="Setting" Label="Settings"/>
-                    </controls:DynamicCommandBar.SecondaryCommands>
-                </controls:DynamicCommandBar>
-            </Grid>
-        </SplitView>
+        <controls:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="3">
+            <controls:DynamicCommandBar.SecondaryCommands>
+                <AppBarButton Icon="Setting" Label="Settings"/>
+            </controls:DynamicCommandBar.SecondaryCommands>
+            <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>
+            <AppBarSeparator/>
+            <AppBarButton Label="词法分析" x:Name="词法分析AppBarButton" Click="词法分析AppBarButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="Lexical" FontFamily="Segoe UI" FontSize="14"/>
+                </AppBarButton.Icon>
+                <SplitView Height="100" Width="100">
+                    <SplitView.Pane>
+                        <Grid/>
+                    </SplitView.Pane>
+                    <Grid/>
+                </SplitView>
+            </AppBarButton>
+            <AppBarButton Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="Syntactic" FontFamily="Segoe UI" FontSize="14"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="属性文法" x:Name="属性文法AppBarButton" Click="属性文法AppBarButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="Attribute" FontFamily="Segoe UI" FontSize="14"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="三地址" x:Name="三地址AppBarButton" Click="三地址AppBarButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="3-address" FontFamily="Segoe UI" FontSize="14"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarSeparator/>
+        </controls:DynamicCommandBar>
     </Grid>
 </Page>

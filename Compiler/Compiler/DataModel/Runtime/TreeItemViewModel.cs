@@ -6,14 +6,14 @@ namespace Compiler.DataModel.Runtime
 
     public class TreeItemViewModel
     {
-        public static readonly Windows.UI.Xaml.Controls.Symbol LibrarySymbol = Windows.UI.Xaml.Controls.Symbol.Library;
-        public static readonly Windows.UI.Xaml.Controls.Symbol CategorySymbol = Windows.UI.Xaml.Controls.Symbol.List;
-        public static readonly Windows.UI.Xaml.Controls.Symbol ItemSymbol = Windows.UI.Xaml.Controls.Symbol.NewWindow;
-        public static readonly Windows.UI.Xaml.Controls.Symbol ErrorSymbol = Windows.UI.Xaml.Controls.Symbol.Cancel;
+        //public static readonly Windows.UI.Xaml.Controls.Symbol LibrarySymbol = Windows.UI.Xaml.Controls.Symbol.Library;
+        //public static readonly Windows.UI.Xaml.Controls.Symbol CategorySymbol = Windows.UI.Xaml.Controls.Symbol.List;
+        //public static readonly Windows.UI.Xaml.Controls.Symbol ItemSymbol = Windows.UI.Xaml.Controls.Symbol.NewWindow;
+        //public static readonly Windows.UI.Xaml.Controls.Symbol ErrorSymbol = Windows.UI.Xaml.Controls.Symbol.Cancel;
 
         public string Text { get; set; }
 
-        public Windows.UI.Xaml.Controls.Symbol StatusSymbol { get; set; }
+        //public Windows.UI.Xaml.Controls.Symbol StatusSymbol { get; set; }
         public ObservableCollection<TreeItemViewModel> Children { get; set; } = new ObservableCollection<TreeItemViewModel>();
 
 

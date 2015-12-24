@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Compiler.DataModel.View;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -27,11 +16,7 @@ namespace Compiler
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public StorageFile CodeFile { get; set; }
-        public LinkedList<Symbol> SymbolTable { get; } = new LinkedList<Symbol>();
-        public LinkedList<Token> TokenListWithType { get; set; }
-        public LinkedList<Token> SemanticList { get; } = new LinkedList<Token>();
-        public LinkedList<Token> ThreeAddressList { get; } = new LinkedList<Token>();
+        private readonly Singleton _instance = Singleton.Instance;
 
         public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>
         {
@@ -44,11 +29,7 @@ namespace Compiler
         {
             InitializeComponent();
         }
-
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
-        {
-            splitView.IsPaneOpen = !splitView.IsPaneOpen;
-        }
+        
 
         private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -81,56 +62,100 @@ namespace Compiler
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
             };
             openPicker.FileTypeFilter.Add(".txt");
-            CodeFile = await openPicker.PickSingleFileAsync();
-            if (CodeFile == null)
+            _instance.CodeFile = await openPicker.PickSingleFileAsync();
+            if (_instance.CodeFile == null)
             {
                 return;
             }
-            LinkedList<Token> tokenList = await Lexical.Separate(CodeFile);
+            LinkedList<Token> tokenList = await Lexical.Separate(_instance.CodeFile);
             //SymbolTable在这里被增删内容
-            TokenListWithType = Lexical.GiveType(tokenList, SymbolTable);
+            _instance.TokenListWithType = Lexical.GiveType(tokenList, _instance.SymbolTable);
+
+            MainWebView.Visibility = Visibility.Visible;
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Collapsed;
+            高亮();
         }
 
         private void 词法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            演示TextBox.Text = Lexical.TokenPrint(TokenListWithType);
+            MainWebView.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
+            演示TextBox.Text = Lexical.TokenPrint(_instance.TokenListWithType);
         }
 
         private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            //TokenListWithType列表内的Token会在这个函数内，被全部删除。
-            //所以复制一份：
-            LinkedList<Token> in1 = new LinkedList<Token>();
-            foreach (Token item in TokenListWithType)
-            {
-                in1.AddLast(item);
-            }
-            //SemanticList在这里产生。
-            演示TextBox.Text = LlParser.Parser(in1, SemanticList);
+            MainWebView.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Visibility = Visibility.Visible;
+            演示TextBox.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Navigate(typeof(TreeViewPage));
         }
 
         private void 三地址AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            MainWebView.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
             //先在函数外面复制一份
-            foreach (Token item in SemanticList)
+            foreach (Token item in _instance.SemanticList)
             {
-                ThreeAddressList.AddLast(item);
+                _instance.ThreeAddressList.AddLast(item);
             }
             int i = 0;
-            演示TextBox.Text = ThreeAddress.semantic_go(ThreeAddressList, ref i);
+            演示TextBox.Text = ThreeAddress.semantic_go(_instance.ThreeAddressList, ref i);
         }
 
         private void 属性文法AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            MainWebView.Visibility = Visibility.Collapsed;
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Visible;
             //先在函数外面复制一份
             LinkedList<Token> in1 = new LinkedList<Token>();
-            foreach (Token item in SemanticList)
+            foreach (Token item in _instance.SemanticList)
             {
                 in1.AddLast(item);
             }
-            演示TextBox.Text = Semantic.semantic_go(in1, SymbolTable);
+            演示TextBox.Text = Semantic.semantic_go(in1, _instance.SymbolTable);
             演示TextBox.Text += Environment.NewLine;
-            演示TextBox.Text += Compiler.SymbolTable.print_symbol_table(SymbolTable);
+            演示TextBox.Text += SymbolTable.print_symbol_table(_instance.SymbolTable);
         }
+
+        private void 高亮()
+        {
+            string css = "body{font-family: Consolas}span."
+                + ConstString.KeyWord + "{color:#F75C5C;}span."
+                + ConstString.Id + "{color:#9454D4;}span."
+                + ConstString.RelationOperator + "{color:#54D494;}span."
+                + ConstString.Integer + "{color:#B9AE1D;}span."
+                + ConstString.Terminator + "{color:#000;}span."
+                + ConstString.Operator + "{color:#ff007f;}span."
+                + ConstString.Exponent + "{color:#000;}span."
+                + ConstString.Comment + "{color:#008000;}span."
+                + ConstString.RealNumber + "{color:#9454D4;}span."
+                + ConstString.Fraction + "{color:#40e0d0;}";
+
+            string header = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>Code</title><style>" + css + "</style></head><body><p>";
+            string output = header;
+            int lastLineNumber = 0;
+            string newLine = "<br/>";
+            string endHtml = "</p></body></html>";
+            foreach (Token token in _instance.TokenListWithType)
+            {
+                if (token.LineNumber > lastLineNumber)
+                {
+                    output += newLine;
+                }
+                string line = "<span class=\"" + token.Type + "\">" + token.Data + "</span>&nbsp;";
+                output += line;
+                lastLineNumber = token.LineNumber;
+            }
+            output = output.Replace("&nbsp;<span class=\"terminator\">;</span>&nbsp;", "<span class=\"terminator\">;</span>&nbsp;");
+            output += endHtml;
+            MainWebView.NavigateToString(output);
+        }
+
     }
 }

@@ -119,7 +119,6 @@ namespace Compiler
 
         private static void stmt_go(LinkedList<Token> semanticList, LinkedList<Symbol> symbolTable)
         {
-            LinkedList<Token> temp_list = new LinkedList<Token>();
             if (semanticList.First.Value.Data == ConstString.Ifstmt)
             {
                 semanticList.RemoveFirst();
@@ -128,13 +127,13 @@ namespace Compiler
             else if (semanticList.First.Value.Data == ConstString.Whilestmt)
             {
                 semanticList.RemoveFirst();
-                temp_list = new LinkedList<Token>(semanticList);
-                bool k = whilestmt_go(temp_list, symbolTable);
+                LinkedList<Token> tempList = new LinkedList<Token>(semanticList);
+                bool k = whilestmt_go(tempList, symbolTable);
 
                 while (k)
                 {
-                    temp_list = new LinkedList<Token>(semanticList);
-                    k = whilestmt_go(temp_list, symbolTable);
+                    tempList = new LinkedList<Token>(semanticList);
+                    k = whilestmt_go(tempList, symbolTable);
                 }
                 if (!k)
                 {
@@ -240,7 +239,7 @@ namespace Compiler
                 }
                 else
                 {
-                    Output("ifstmt_go else ERROR !!! NO stmt!!!");
+                    Output(string.Format(ErrorDisplay, nameof(ifstmt_go), ConstString.Stmt));
                     Output(Environment.NewLine);
                 }
             }
@@ -298,7 +297,7 @@ namespace Compiler
             }
             else
             {
-                Output("assgstmt ERROR!!! NO = !!!");
+                Output(string.Format(ErrorDisplay, nameof(assgstmt_go), ConstString.等号));
                 Output(Environment.NewLine);
             }
 
@@ -308,7 +307,7 @@ namespace Compiler
             }
             else
             {
-                Output("assgstmt ERROR!!! NO calexpr !!!");
+                Output(string.Format(ErrorDisplay, nameof(assgstmt_go), ConstString.Arithexpr));
                 Output(Environment.NewLine);
             }
 
@@ -369,7 +368,7 @@ namespace Compiler
             if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
-                if (k == true)
+                if (k)
                 {
                     stmt_go(semanticList, symbolTable);
                 }
@@ -484,37 +483,13 @@ namespace Compiler
         private static int calexprim_go(LinkedList<Token> semanticList, LinkedList<Symbol> symbolTable)
         {
             int a = 0;
-            if (semanticList.First.Value.Data == "+")
-            {
-                semanticList.RemoveFirst();
-                if (semanticList.First.Value.Data == "multexpr")
-                {
-                    semanticList.RemoveFirst();
-                    a = a + multexpr_go(semanticList, symbolTable);
-                }
-                else
-                {
-                    Output("calexprim ERROR!!!NO multexpr");
-                    Output(Environment.NewLine);
-                }
-                if (semanticList.First.Value.Data == "arithexprprime")
-                {
-                    semanticList.RemoveFirst();
-                    a = a + calexprim_go(semanticList, symbolTable);
-                }
-                else
-                {
-                    Output("calexprim_go ERROR!!! NO arithexprprime!!!");
-                    Output(Environment.NewLine);
-                }
-            }
-            else if (semanticList.First.Value.Data == "-")
+            if (semanticList.First.Value.Data == ConstString.加号)
             {
                 semanticList.RemoveFirst();
                 if (semanticList.First.Value.Data == ConstString.Multexpr)
                 {
                     semanticList.RemoveFirst();
-                    a = a - multexpr_go(semanticList, symbolTable);
+                    a = a + multexpr_go(semanticList, symbolTable);
                 }
                 else
                 {
@@ -532,7 +507,31 @@ namespace Compiler
                     Output(Environment.NewLine);
                 }
             }
-            else if (semanticList.First.Value.Data == "arithexprprime:ε")
+            else if (semanticList.First.Value.Data == ConstString.减号)
+            {
+                semanticList.RemoveFirst();
+                if (semanticList.First.Value.Data == ConstString.Multexpr)
+                {
+                    semanticList.RemoveFirst();
+                    a = a - multexpr_go(semanticList, symbolTable);
+                }
+                else
+                {
+                    Output(string.Format(ErrorDisplay, nameof(calexprim_go), ConstString.Multexpr));
+                    Output(Environment.NewLine);
+                }
+                if (semanticList.First.Value.Data == ConstString.Arithexprprime)
+                {
+                    semanticList.RemoveFirst();
+                    a = a + calexprim_go(semanticList, symbolTable);
+                }
+                else
+                {
+                    Output(string.Format(ErrorDisplay, nameof(calexprim_go), ConstString.Arithexprprime));
+                    Output(Environment.NewLine);
+                }
+            }
+            else if (semanticList.First.Value.Data == ConstString.Arithexprprime空)
             {
                 semanticList.RemoveFirst();
             }
@@ -557,7 +556,7 @@ namespace Compiler
             }
             else
             {
-                Output("multexpr ERROR!!!NO simpleexpr !!!");
+                Output(string.Format(ErrorDisplay, nameof(multexpr_go), ConstString.Simpleexpr));
                 Output(Environment.NewLine);
             }
 
@@ -572,11 +571,11 @@ namespace Compiler
                 Output(Environment.NewLine);
             }
 
-            if (cal == "*")
+            if (cal == ConstString.乘号)
             {
                 a = a * b;
             }
-            else if (cal == "/")
+            else if (cal == ConstString.除号)
             {
                 a = a / b;
             }
@@ -597,7 +596,7 @@ namespace Compiler
             int a = 0;
             int b;
             string m = string.Empty;
-            if (semanticList.First.Value.Data == "*")
+            if (semanticList.First.Value.Data == ConstString.乘号)
             {
                 cal = semanticList.First.Value.Data;
                 semanticList.RemoveFirst();
@@ -609,11 +608,11 @@ namespace Compiler
                     {
                         semanticList.RemoveFirst();
                         b = multexprim_go(semanticList, symbolTable, ref m);
-                        if (m == "*")
+                        if (m == ConstString.乘号)
                         {
                             a = a * b;
                         }
-                        else if (m == "/")
+                        else if (m == ConstString.除号)
                         {
                             a = a / b;
                         }
@@ -629,33 +628,33 @@ namespace Compiler
                     }
                     else
                     {
-                        Output("multexprim_go ERROR!!! NO multexprprime !!!");
+                        Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Multexprprime));
                         Output(Environment.NewLine);
                     }
                 }
                 else
                 {
-                    Output("multexprim_go ERROR!!! NO simpleexpr !!!");
+                    Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Simpleexpr));
                     Output(Environment.NewLine);
                 }
             }
-            else if (semanticList.First.Value.Data == "/")
+            else if (semanticList.First.Value.Data == ConstString.除号)
             {
                 cal = semanticList.First.Value.Data;
                 semanticList.RemoveFirst();
-                if (semanticList.First.Value.Data == "simpleexpr")
+                if (semanticList.First.Value.Data == ConstString.Simpleexpr)
                 {
                     semanticList.RemoveFirst();
                     a = simexpr_go(semanticList, symbolTable);
-                    if (semanticList.First.Value.Data == "multexprprime")
+                    if (semanticList.First.Value.Data == ConstString.Multexprprime)
                     {
                         semanticList.RemoveFirst();
                         b = multexprim_go(semanticList, symbolTable, ref m);
-                        if (m == "*")
+                        if (m == ConstString.乘号)
                         {
                             a = a * b;
                         }
-                        else if (m == "/")
+                        else if (m == ConstString.除号)
                         {
                             a = a / b;
                         }
@@ -671,13 +670,13 @@ namespace Compiler
                     }
                     else
                     {
-                        Output("multexprim_go ERROR!!! NO multexprprime !!!");
+                        Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Multexprprime));
                         Output(Environment.NewLine);
                     }
                 }
                 else
                 {
-                    Output("multexprim_go ERROR!!! NO simpleexpr !!!");
+                    Output(string.Format(ErrorDisplay, nameof(multexprim_go), ConstString.Simpleexpr));
                     Output(Environment.NewLine);
                 }
             }
@@ -704,7 +703,7 @@ namespace Compiler
                 semanticList.RemoveFirst();
                 a = SymbolTable.get_data(id, symbolTable);
             }
-            else if (semanticList.First.Value.Type == "integer" || semanticList.First.Value.Type == "real_number")
+            else if (semanticList.First.Value.Type == ConstString.Integer || semanticList.First.Value.Type == ConstString.RealNumber)
             {
                 a = int.Parse(semanticList.First.Value.Data);
                 semanticList.RemoveFirst();
@@ -739,27 +738,26 @@ namespace Compiler
             }
 
             return a;
-
         }
 
         private static void pop_stmt(LinkedList<Token> semanticList)
         {
-            if (semanticList.First.Value.Data == "ifstmt")
+            if (semanticList.First.Value.Data == ConstString.Ifstmt)
             {
                 semanticList.RemoveFirst();
                 pop_ifstmt(semanticList);
             }
-            else if (semanticList.First.Value.Data == "whilestmt")
+            else if (semanticList.First.Value.Data == ConstString.Whilestmt)
             {
                 semanticList.RemoveFirst();
                 pop_whilestmt(semanticList);
             }
-            else if (semanticList.First.Value.Data == "assgstmt")
+            else if (semanticList.First.Value.Data == ConstString.Assgstmt)
             {
                 semanticList.RemoveFirst();
                 pop_assgstmt(semanticList);
             }
-            else if (semanticList.First.Value.Data == "compoundstmt")
+            else if (semanticList.First.Value.Data == ConstString.Compoundstmt)
             {
                 semanticList.RemoveFirst();
                 pop_comp(semanticList);
@@ -773,135 +771,131 @@ namespace Compiler
 
         private static void pop_assgstmt(LinkedList<Token> semanticList)
         {
-            if (semanticList.First.Value.Type != "ID")
+            if (semanticList.First.Value.Type != ConstString.Id)
             {
-                Output("pop_assgstmt ERROR NO ID!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_assgstmt), ConstString.Id));
                 Output(Environment.NewLine);
             }
-            while (semanticList.First.Value.Data != ";")
+            while (semanticList.First.Value.Data != ConstString.分号)
             {
                 semanticList.RemoveFirst();
             }
-            if (semanticList.First.Value.Data == ";")
+            if (semanticList.First.Value.Data == ConstString.分号)
             {
                 semanticList.RemoveFirst();
             }
             else
             {
-                Output("pop_assgstmt ERRER !!! NO ; !!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_assgstmt), ConstString.分号));
                 Output(Environment.NewLine);
             }
         }
 
         private static void pop_ifstmt(LinkedList<Token> semanticList)
         {
-            while (semanticList.First.Value.Data != "stmt")
+            while (semanticList.First.Value.Data != ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
             }
-            if (semanticList.First.Value.Data == "stmt")
-            {
-                semanticList.RemoveFirst();
-                pop_stmt(semanticList);
-            }
-            else
-            {
-                Output("pop_ifstmt ERROR !!! NO stmt!!!");
-                Output(Environment.NewLine);
-            }
-
-            if (semanticList.First.Value.Data == "else")
-            {
-                semanticList.RemoveFirst();
-            }
-            else
-            {
-                Output("pop_ifstmt ERROR !!! NO else!!!");
-                Output(Environment.NewLine);
-            }
-
-            if (semanticList.First.Value.Data == "stmt")
+            if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
                 pop_stmt(semanticList);
             }
             else
             {
-                Output("pop_ifstmt ERROR !!! NO stmt!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_ifstmt), ConstString.Stmt));
+                Output(Environment.NewLine);
+            }
+            if (semanticList.First.Value.Data == ConstString.Else)
+            {
+                semanticList.RemoveFirst();
+            }
+            else
+            {
+                Output(string.Format(ErrorDisplay, nameof(pop_ifstmt), ConstString.Else));
+                Output(Environment.NewLine);
+            }
+            if (semanticList.First.Value.Data == ConstString.Stmt)
+            {
+                semanticList.RemoveFirst();
+                pop_stmt(semanticList);
+            }
+            else
+            {
+                Output(string.Format(ErrorDisplay, nameof(pop_ifstmt), ConstString.Stmt));
                 Output(Environment.NewLine);
             }
         }
 
         private static void pop_whilestmt(LinkedList<Token> semanticList)
         {
-            while (semanticList.First.Value.Data != "stmt")
+            while (semanticList.First.Value.Data != ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
             }
-            if (semanticList.First.Value.Data == "stmt")
+            if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
                 pop_stmt(semanticList);
             }
             else
             {
-                Output("pop_whilestmt ERROR!!!NO stmt!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_whilestmt), ConstString.Stmt));
                 Output(Environment.NewLine);
             }
         }
 
         private static void pop_comp(LinkedList<Token> semanticList)
         {
-            if (semanticList.First.Value.Data == "{")
+            if (semanticList.First.Value.Data == ConstString.左大括号)
             {
                 semanticList.RemoveFirst();
             }
             else
             {
-                Output("pop_comp ERROR!!!NO {!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_comp), ConstString.左大括号));
                 Output(Environment.NewLine);
             }
-
-            if (semanticList.First.Value.Data == "stmts")
+            if (semanticList.First.Value.Data == ConstString.Stmts)
             {
                 semanticList.RemoveFirst();
                 pop_stmts(semanticList);
             }
             else
             {
-                Output("pop_comp ERROR!!!NO stmts!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_comp), ConstString.Stmts));
                 Output(Environment.NewLine);
             }
-
-            if (semanticList.First.Value.Data == "}")
+            if (semanticList.First.Value.Data == ConstString.右大括号)
             {
                 semanticList.RemoveFirst();
             }
             else
             {
-                Output("pop_comp ERROR!!!NO }!!!");
+                Output(string.Format(ErrorDisplay, nameof(pop_comp), ConstString.右大括号));
                 Output(Environment.NewLine);
             }
         }
 
         private static void pop_stmts(LinkedList<Token> semanticList)
         {
-            if (semanticList.First.Value.Data == "stmt")
+            if (semanticList.First.Value.Data == ConstString.Stmt)
             {
                 semanticList.RemoveFirst();
                 pop_stmt(semanticList);
-                if (semanticList.First.Value.Data == "stmts")
+                if (semanticList.First.Value.Data == ConstString.Stmts)
                 {
                     semanticList.RemoveFirst();
                     pop_stmts(semanticList);
                 }
                 else
                 {
-                    Output("pop_stmts ERROR!!!NO stmts!!!");
+                    Output(string.Format(ErrorDisplay, nameof(pop_stmts), ConstString.Stmts));
                     Output(Environment.NewLine);
                 }
             }
-            else if (semanticList.First.Value.Data == "stmts:ε")
+            else if (semanticList.First.Value.Data == ConstString.Stmts空)
             {
                 semanticList.RemoveFirst();
             }
@@ -912,7 +906,7 @@ namespace Compiler
             }
         }
 
-        private static void print_semantic_list(LinkedList<Token> semanticList)
+        public static void print_semantic_list(LinkedList<Token> semanticList)
         {
             while (semanticList.Count > 0)
             {

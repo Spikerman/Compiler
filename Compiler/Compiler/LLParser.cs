@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Compiler.DataModel.Runtime;
 
 namespace Compiler
 {
-    public static class LlParser
+    public class LlParser
     {
 
         private static int _llSearchCounter;
         private static string _outputString = string.Empty;
+        private static ObservableCollection<TreeItemViewModel> _treeItems;
 
-        public static string Parser(LinkedList<Token> inputTokenList, LinkedList<Token> semanticList)
+        public static string Parser(LinkedList<Token> inputTokenList, LinkedList<Token> semanticList, ObservableCollection<TreeItemViewModel> treeItems)
         {
+            _treeItems = treeItems;
             _outputString = string.Empty;
             bool key = true;
             Stack<int> sum = new Stack<int>();
 
-            Stack<string> word = StackInit();
+            Stack<TreeItemViewModel> word = StackInit();
 
             while (word.Count > 0 && inputTokenList.Count > 0)
             {
@@ -36,18 +40,21 @@ namespace Compiler
             return _outputString;
         }
 
-        private static Stack<string> StackInit()
+        private static Stack<TreeItemViewModel> StackInit()
         {
-            //Stack<TreeItemViewModel> word = new Stack<TreeItemViewModel>();
-            Stack<string> word = new Stack<string>();
-            word.Push(ConstString.Program);
-
+            Stack<TreeItemViewModel> word = new Stack<TreeItemViewModel>();
+            TreeItemViewModel child = new TreeItemViewModel
+            {
+                Text = ConstString.Program
+            };
+            word.Push(child);
+            _treeItems.Add(child);
             return word;
         }
 
-        private static bool LlSearch(Stack<string> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
+        private static bool LlSearch(Stack<TreeItemViewModel> wordStack, LinkedList<Token> tokenList, Stack<int> sum, LinkedList<Token> semanticList)
         {
-            string stackTopWord = wordStack.Peek();
+            string stackTopWord = wordStack.Peek().Text;
             Token tokenTop = tokenList.First.Value;
             string tokenData = tokenTop.Data;
             string tokenType = tokenTop.Type;
@@ -56,8 +63,8 @@ namespace Compiler
 
             if (stackTopWord == ConstString.Program && tokenData == ConstString.左大括号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Compoundstmt);
+                string[] 体 = { ConstString.Compoundstmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Program);
@@ -66,8 +73,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.If)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Ifstmt);
+                string[] 体 = { ConstString.Ifstmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -76,8 +83,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.While)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Whilestmt);
+                string[] 体 = { ConstString.Whilestmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -86,8 +93,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenType == ConstString.Id)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Assgstmt);
+                string[] 体 = { ConstString.Assgstmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -96,8 +103,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.左大括号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Compoundstmt);
+                string[] 体 = { ConstString.Compoundstmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -106,10 +113,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Compoundstmt && tokenData == ConstString.左大括号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.右大括号);
-                wordStack.Push(ConstString.Stmts);
-                wordStack.Push(ConstString.左大括号);
+                string[] 体 = { ConstString.左大括号, ConstString.Stmts, ConstString.右大括号 };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Compoundstmt);
@@ -118,9 +123,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmts && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号 || tokenType == ConstString.Id))
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Stmts);
-                wordStack.Push(ConstString.Stmt);
+                string[] 体 = { ConstString.Stmt, ConstString.Stmts };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmts);
@@ -129,7 +133,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmts && tokenData == ConstString.右大括号)
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Stmts空);
                 Output(Environment.NewLine);
@@ -138,15 +143,9 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Ifstmt && tokenData == ConstString.If)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Stmt);
-                wordStack.Push(ConstString.Else);
-                wordStack.Push(ConstString.Stmt);
-                wordStack.Push(ConstString.Then);
-                wordStack.Push(ConstString.右括号);
-                wordStack.Push(ConstString.Boolexpr);
-                wordStack.Push(ConstString.左括号);
-                wordStack.Push(ConstString.If);
+                string[] 体 = {ConstString.If, ConstString.左括号, ConstString.Boolexpr,
+                    ConstString.右括号, ConstString.Then, ConstString.Stmt, ConstString.Else, ConstString.Stmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 sum.Push(_llSearchCounter);
@@ -156,12 +155,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Whilestmt && tokenData == ConstString.While)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Stmt);
-                wordStack.Push(ConstString.右括号);
-                wordStack.Push(ConstString.Boolexpr);
-                wordStack.Push(ConstString.左括号);
-                wordStack.Push(ConstString.While);
+                string[] 体 = { ConstString.While, ConstString.左括号, ConstString.Boolexpr, ConstString.右括号, ConstString.Stmt };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Whilestmt);
@@ -170,11 +165,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Assgstmt && tokenType == ConstString.Id)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.分号);
-                wordStack.Push(ConstString.Arithexpr);
-                wordStack.Push(ConstString.等号);
-                wordStack.Push(ConstString.Id);
+                string[] 体 = { ConstString.Id, ConstString.等号, ConstString.Arithexpr, ConstString.分号 };
+                出栈入栈(wordStack, 体);
                 sum.Push(_llSearchCounter);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
@@ -184,10 +176,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Arithexpr);
-                wordStack.Push(ConstString.Boolop);
-                wordStack.Push(ConstString.Arithexpr);
+                string[] 体 = { ConstString.Arithexpr, ConstString.Boolop, ConstString.Arithexpr };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Boolexpr);
@@ -196,8 +186,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolop && tokenType == ConstString.RelationOperator)
             {
-                wordStack.Pop();
-                wordStack.Push(tokenData);
+                string[] 体 = { tokenData };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Boolop);
                 Output(Environment.NewLine);
@@ -205,9 +195,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenType == ConstString.Id || tokenData == ConstString.左括号))
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Arithexprprime);
-                wordStack.Push(ConstString.Multexpr);
+                string[] 体 = { ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexpr);
@@ -216,10 +205,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.加号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Arithexprprime);
-                wordStack.Push(ConstString.Multexpr);
-                wordStack.Push(ConstString.加号);
+                string[] 体 = { ConstString.加号, ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexprprime);
@@ -228,10 +215,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.减号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Arithexprprime);
-                wordStack.Push(ConstString.Multexpr);
-                wordStack.Push(ConstString.减号);
+                string[] 体 = { ConstString.减号, ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexprprime);
@@ -240,7 +225,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Arithexprprime空);
                 Output(Environment.NewLine);
@@ -249,9 +235,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Multexprprime);
-                wordStack.Push(ConstString.Simpleexpr);
+                string[] 体 = { ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexpr);
@@ -260,10 +245,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.乘号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Multexprprime);
-                wordStack.Push(ConstString.Simpleexpr);
-                wordStack.Push(ConstString.乘号);
+                string[] 体 = { ConstString.乘号, ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexprprime);
@@ -272,10 +255,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.除号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Multexprprime);
-                wordStack.Push(ConstString.Simpleexpr);
-                wordStack.Push(ConstString.除号);
+                string[] 体 = { ConstString.除号, ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexprprime);
@@ -284,7 +265,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.加号 || tokenData == ConstString.减号 || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Multexprprime空);
                 Output(Environment.NewLine);
@@ -293,8 +275,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && tokenType == ConstString.Id)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Id);
+                string[] 体 = { ConstString.Id };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -303,8 +285,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.Num);
+                string[] 体 = { ConstString.Num };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -313,10 +295,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && tokenData == ConstString.左括号)
             {
-                wordStack.Pop();
-                wordStack.Push(ConstString.右括号);
-                wordStack.Push(ConstString.Arithexpr);
-                wordStack.Push(ConstString.左括号);
+                string[] 体 = { ConstString.左括号, ConstString.Arithexpr, ConstString.右括号 };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -325,7 +305,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Id && tokenType == ConstString.Id)
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Id);
                 Output(Environment.NewLine);
@@ -334,7 +315,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Num && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Num);
                 Output(Environment.NewLine);
@@ -473,7 +455,8 @@ namespace Compiler
 
             else if (stackTopWord == tokenData)
             {
-                wordStack.Pop();
+                string[] 体 = { };
+                出栈入栈(wordStack, 体);
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
                 if (tokenType == ConstString.Operator || tokenType == ConstString.RelationOperator)
@@ -543,9 +526,19 @@ namespace Compiler
             _outputString += content;
         }
 
-        private static void 出栈入栈(Stack<string> stack)
+        private static void 出栈入栈(Stack<TreeItemViewModel> wordStack, string[] 产生式体)
         {
-            
+            TreeItemViewModel node = wordStack.Pop();
+            for (int i = 产生式体.Length - 1; i >= 0; i--)
+            {
+                TreeItemViewModel child = new TreeItemViewModel
+                {
+                    Text = 产生式体[i]
+                };
+
+                wordStack.Push(child);
+                node.Children.Insert(0, child);
+            }
         }
     }
 }
