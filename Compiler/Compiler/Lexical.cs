@@ -354,13 +354,12 @@ namespace Compiler
             {
                 Token token = tokenList.First.Value;
                 Output(token.Data);
-                Output(" : ");
-                Output(token.Type);
-                Output(" [");
+                Output("\t[");
                 Output(token.LineNumber.ToString());
-                Output(" , ");
+                Output("\t,\t");
                 Output(token.ColumnNumber.ToString());
-                Output("]");
+                Output("]\t");
+                Output(token.Type);
                 Output(Environment.NewLine);
                 tokenList.RemoveFirst();
                 tokenList.AddLast(token);

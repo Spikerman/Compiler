@@ -28,7 +28,7 @@
                 </DataTemplate>
             </controls:TreeView.ItemTemplate>
         </controls:TreeView>
-        <!--<TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        <!--<TextBox x:Name="演示TextBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                  Grid.Column="1"/>-->
     </Grid>
 </Page>
