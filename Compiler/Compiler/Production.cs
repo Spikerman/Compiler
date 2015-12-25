@@ -9,7 +9,7 @@ namespace Compiler
 {
     public class Production
     {
-        public string Header { get; set; }
+        public string Head { get; set; }
         public string[] Body { get; set; }
 
         public void 出栈入栈(Stack<string> stack)

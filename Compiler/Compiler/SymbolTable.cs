@@ -15,6 +15,7 @@ namespace Compiler
 
         public static string print_symbol_table(LinkedList<Symbol> symbolTable)
         {
+            _outputString = string.Empty;
             foreach (var tmp in symbolTable)
             {
                 Output("[");

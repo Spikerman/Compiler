@@ -3,12 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Compiler"
-    RequestedTheme="Light">
+    RequestedTheme="Dark">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Styles.xaml"/>
-                <ResourceDictionary Source="ms-appx:///UI/Controls/TreeView/TreeView.xaml" />
+                <ResourceDictionary Source="/UI/Controls/TreeView/TreeView.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <!--以下取自C:\Program Files (x86)\Windows Kits\10\DesignTime\CommonConfiguration\Neutral\UAP\10.0.10240.0\Generic\generic.xaml-->
             <ControlTemplate TargetType="ContentDialog" x:Key="MyContentDialogControlTemplate">
@@ -108,7 +108,6 @@
                     </Grid>
                 </Border>
             </ControlTemplate>
-
         </ResourceDictionary>
     </Application.Resources>
 

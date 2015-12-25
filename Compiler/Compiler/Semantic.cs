@@ -15,6 +15,7 @@ namespace Compiler
 
         public static string semantic_go(LinkedList<Token> semanticList, LinkedList<Symbol> symbolTable)
         {
+            _outputString = string.Empty;
             if (semanticList.Count > 0)
             {
                 if (semanticList.First.Value.Data == ConstString.Program)

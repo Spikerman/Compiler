@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Compiler"
-    xmlns:localUi="using:Compiler.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Compiler.UI.Controls"
@@ -14,43 +13,26 @@
         <Style TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="WrapWholeWords" />
         </Style>
-        <DataTemplate x:Key="NavLinkItemTemplate" x:DataType="view:NavLink">
-            <StackPanel Orientation="Horizontal"  Margin="2,0,0,0">
-                <SymbolIcon Symbol="{x:Bind Symbol}"/>
-                <TextBlock Text="{x:Bind Label}" Margin="24,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
     </Page.Resources>
-    <Grid Margin="0">
+    <Grid>
         <Grid.Background>
             <ImageBrush Stretch="Uniform" ImageSource="Assets/SplashScreen.png" Opacity="0.4"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="68*"/>
-            <RowDefinition Height="965*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <WebView x:Name="MainWebView" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
-        <Frame x:Name="ScenarioFrame" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
-        <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="2"/>
-
-        <controls:DynamicCommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="3">
-            <controls:DynamicCommandBar.SecondaryCommands>
-                <AppBarButton Icon="Setting" Label="Settings"/>
-            </controls:DynamicCommandBar.SecondaryCommands>
+        <WebView x:Name="MainWebView" Grid.Row="1" Visibility="Collapsed"/>
+        <Frame x:Name="ScenarioFrame" Grid.Row="1" Visibility="Collapsed"/>
+        <TextBox x:Name="演示TextBox" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Visibility="Collapsed"/>
+        <CommandBar IsOpen="False" ClosedDisplayMode="Compact" Grid.Row="2">
             <AppBarButton Icon="OpenFile" Label="打开" x:Name="OpenAppBarButton" Click="OpenAppBarButton_Click"/>
             <AppBarSeparator/>
             <AppBarButton Label="词法分析" x:Name="词法分析AppBarButton" Click="词法分析AppBarButton_Click">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="Lexical" FontFamily="Segoe UI" FontSize="14"/>
                 </AppBarButton.Icon>
-                <SplitView Height="100" Width="100">
-                    <SplitView.Pane>
-                        <Grid/>
-                    </SplitView.Pane>
-                    <Grid/>
-                </SplitView>
             </AppBarButton>
             <AppBarButton Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click">
                 <AppBarButton.Icon>
@@ -68,6 +50,6 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarSeparator/>
-        </controls:DynamicCommandBar>
+        </CommandBar>
     </Grid>
 </Page>

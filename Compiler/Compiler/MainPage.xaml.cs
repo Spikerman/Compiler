@@ -156,6 +156,5 @@ namespace Compiler
             output += endHtml;
             MainWebView.NavigateToString(output);
         }
-
     }
 }
