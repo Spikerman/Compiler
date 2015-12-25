@@ -32,7 +32,7 @@ namespace Compiler
         private readonly Singleton _instance = Singleton.Instance;
         public ObservableCollection<TreeItemViewModel> TreeItems { get; } = new ObservableCollection<TreeItemViewModel>();
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //if (e.Parameter != null)
             {
@@ -45,6 +45,7 @@ namespace Compiler
                 }
                 //SemanticList在这里产生。
                 string log = LlParser.Parser(in1, _instance.SemanticList, TreeItems);
+                //演示TextBox.Text = log;
             }
 
             base.OnNavigatedTo(e);

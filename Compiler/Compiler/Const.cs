@@ -63,6 +63,7 @@
         public static string 分号 { get; } = ";";
         public static string 加号 { get; } = "+";
         public static string 减号 { get; } = "-";
+        public static string 空 { get; } = "ε";
         public static string 两斜杠 { get; } = "//";
         public static string 相等号 { get; } = "==";
         public static string 小于等于号 { get; } = "<=";

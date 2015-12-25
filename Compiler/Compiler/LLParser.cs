@@ -305,7 +305,7 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Id && tokenType == ConstString.Id)
             {
-                string[] Body = { };
+                string[] Body = null;
                 出栈入栈(wordStack, Body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Id);
@@ -315,7 +315,7 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Num && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
-                string[] Body = { };
+                string[] Body = null;
                 出栈入栈(wordStack, Body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Num);
@@ -452,7 +452,7 @@ namespace Compiler
             }
             else if (stackTopWord == tokenData)
             {
-                string[] Body = { };
+                string[] Body = null;
                 出栈入栈(wordStack, Body);
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
@@ -526,15 +526,28 @@ namespace Compiler
         private static void 出栈入栈(Stack<TreeItemViewModel> wordStack, string[] 产生式体)
         {
             TreeItemViewModel node = wordStack.Pop();
-            for (int i = 产生式体.Length - 1; i >= 0; i--)
+            if (产生式体 != null)
             {
-                TreeItemViewModel child = new TreeItemViewModel
+                if (产生式体.Length != 0)
                 {
-                    Text = 产生式体[i]
-                };
+                    for (int i = 产生式体.Length - 1; i >= 0; i--)
+                    {
+                        TreeItemViewModel child = new TreeItemViewModel
+                        {
+                            Text = 产生式体[i]
+                        };
 
-                wordStack.Push(child);
-                node.Children.Insert(0, child);
+                        wordStack.Push(child);
+                        node.Children.Insert(0, child);
+                    }
+                }
+                else
+                {
+                    node.Children.Insert(0, new TreeItemViewModel
+                    {
+                        Text = ConstString.空
+                    });
+                }
             }
         }
     }

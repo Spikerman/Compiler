@@ -18,40 +18,13 @@ namespace Compiler
     {
         private readonly Singleton _instance = Singleton.Instance;
 
-        public ObservableCollection<NavLink> NavLinks { get; } = new ObservableCollection<NavLink>
-        {
-            //new NavLink { Label = "Main", Symbol = Symbol.Home, DestPage = typeof(LibrariesPage) },
-            //new NavLink { Label = "Test", Symbol = Symbol.Home },
-            //new NavLink { Label = "获取文件夹访问权限", Symbol = Symbol.Library }
-        };
-
         public MainPage()
         {
             InitializeComponent();
         }
         
-
-        private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            NavLink navLink = e.ClickedItem as NavLink;
-            Debug.Assert(navLink != null, "navLink != null");
-            if (navLink.Label == "获取文件夹访问权限")
-            {
-            }
-            else if (navLink.Label == "Test")
-            {
-                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
-            else
-            {
-                //ScenarioFrame.Navigate(navLink.DestPage);
-            }
-        }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //MainPivot = MainPivotInstance;
-            //ScenarioFrame.Navigate(typeof(LibrariesPage));
         }
 
         private async void OpenAppBarButton_Click(object sender, RoutedEventArgs e)
