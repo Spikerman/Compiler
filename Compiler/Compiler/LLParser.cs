@@ -325,30 +325,37 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolop && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenData == ConstString.右括号))
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString()+ Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Program && tokenData == ConstString.EndTerminal)
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Stmts && tokenData == ConstString.右大括号)
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Boolexpr && tokenData == ConstString.右括号)
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.RelationOperator || tokenData == ConstString.分号 || tokenData == ConstString.右括号))
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenData == ConstString.加号 || tokenData == ConstString.减号))
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenData == ConstString.乘号 || tokenData == ConstString.除号))
             {
+                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Program && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -356,6 +363,8 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+
+                _outputString += "invalide token at line "+lineNumber.ToString()+" column "+columnNumber.ToString()+"! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Ifstmt && (tokenData == ConstString.左大括号 || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -363,6 +372,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Whilestmt && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenType == ConstString.Id
@@ -370,6 +380,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Assgstmt && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -377,6 +388,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Stmt && (
@@ -384,6 +396,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Stmts && (
@@ -391,6 +404,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Boolexpr && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -398,6 +412,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号
                 ))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Boolop && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -405,6 +420,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -412,6 +428,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.右大括号
                 ))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Arithexprprime && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -419,6 +436,7 @@ namespace Compiler
                  || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.右大括号
                 ))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -426,6 +444,7 @@ namespace Compiler
                 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Multexprprime && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -433,6 +452,7 @@ namespace Compiler
                 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -440,6 +460,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Compoundstmt && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -448,6 +469,7 @@ namespace Compiler
                  || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
+                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == tokenData)
