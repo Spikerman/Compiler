@@ -578,6 +578,12 @@ namespace Compiler
             }
             else if (cal == ConstString.除号)
             {
+                if(b==0)
+                {
+                    Output("divided by zero");
+                    Output(Environment.NewLine);
+                }
+                else
                 a = a / b;
             }
             else if (cal == string.Empty)
@@ -615,7 +621,13 @@ namespace Compiler
                         }
                         else if (m == ConstString.除号)
                         {
-                            a = a / b;
+                            if (b == 0)
+                            {
+                                Output("divided by zero");
+                                Output(Environment.NewLine);
+                            }
+                            else
+                                a = a / b;
                         }
                         else if (m == string.Empty)
                         {
@@ -657,7 +669,13 @@ namespace Compiler
                         }
                         else if (m == ConstString.除号)
                         {
-                            a = a / b;
+                            if (b == 0)
+                            {
+                                Output("divided by zero");
+                                Output(Environment.NewLine);
+                            }
+                            else
+                                a = a / b;
                         }
                         else if (m == string.Empty)
                         {
