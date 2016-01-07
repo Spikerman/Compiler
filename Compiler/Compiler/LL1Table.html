@@ -1,0 +1,446 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <table class="table table-bordered">
+        <tr>
+            <th></th>
+            <th>if</th>
+            <th>while</th>
+            <th>+</th>
+            <th>-</th>
+            <th>*</th>
+            <th>/</th>
+            <th>&lt;</th>
+            <th>&gt;</th>
+            <th>&lt;=</th>
+            <th>&gt;=</th>
+            <th>==</th>
+            <th>(</th>
+            <th>)</th>
+            <th>{</th>
+            <th>}</th>
+            <th>;</th>
+            <th>Num</th>
+            <th>ID</th>
+            <th>$</th>
+        </tr>
+        <tr>
+            <td>arithexpr</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td>
+                arithexpr→multexpr arithexprprime
+            </td>
+            <td class="danger">synch</td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+            <td>
+                arithexpr→multexpr arithexprprime
+            </td>
+            <td>
+                arithexpr→multexpr arithexprprime
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>arithexprprime</td>
+            <td></td>
+            <td></td>
+            <td>
+                arithexprprime→+ multexpr arithexprprime
+            </td>
+            <td>
+                arithexprprime→- multexpr arithexprprime
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td></td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                arithexprprime→null
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>assgstmt</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                assgstmt→ID=arithexpr;
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>boolexpr</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                boolexpr→arithexpr boolop arithexpr
+            </td>
+            <td class="danger">synch</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                boolexpr→arithexpr boolop arithexpr
+            </td>
+            <td>
+                boolexpr→arithexpr boolop arithexpr
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>boolop</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>boolop→&lt;</td>
+            <td>boolop→&gt;</td>
+            <td>boolop→&lt;=</td>
+            <td>
+                boolop→>=
+            </td>
+            <td>
+                boolop→==
+            </td>
+            <td class="danger">synch</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>compoundstmt</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                compoundstmt→{ stmts }
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>ifstmt</td>
+            <td>
+                ifstmt→if ( boolexpr ) then stmt else stmt
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>multexpr</td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                multexpr→simpleexpr multexprprime
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                multexpr→simpleexpr multexprprime
+            </td>
+            <td>
+                multexpr→simpleexpr multexprprime
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>multexprprime</td>
+            <td></td>
+            <td></td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→* simpleexpr multexprprime
+            </td>
+            <td>
+                multexprprime→/ simpleexpr multexprprime
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td>
+                multexprprime→null
+            </td>
+            <td></td>
+            <td>
+                multexprprime→null
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                multexprprime→null
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>program</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                program→compoundstmt
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+        </tr>
+        <tr>
+            <td>simpleexpr</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="danger">synch</td>
+            <td class="danger">synch</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                simpleexpr→( arithexpr )
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                simpleexpr→Num
+            </td>
+            <td>
+                simpleexpr→ID
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>stmt</td>
+            <td>
+                stmt→ifstmt
+            </td>
+            <td>
+                stmt→whilestmt
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                stmt→compoundstmt
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                stmt→assgstmt
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>stmts</td>
+            <td>
+                stmts→stmt stmts
+            </td>
+            <td>
+                stmts→stmt stmts
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                stmts→stmt stmts
+            </td>
+            <td>
+                stmts→null
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                stmts→stmt stmts
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>whilestmt</td>
+            <td></td>
+            <td>
+                whilestmt→while ( boolexpr ) stmt
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>

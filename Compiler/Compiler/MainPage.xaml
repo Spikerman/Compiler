@@ -34,6 +34,11 @@
                     <FontIcon Glyph="Lexical" FontFamily="Segoe UI" FontSize="14"/>
                 </AppBarButton.Icon>
             </AppBarButton>
+            <AppBarButton Label="预测分析表" x:Name="预测分析表AppBarButton" Click="预测分析表AppBarButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="Parsing Table" FontFamily="Segoe UI" FontSize="14"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton Label="语法分析" x:Name="语法分析AppBarButton" Click="语法分析AppBarButton_Click">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="Syntactic" FontFamily="Segoe UI" FontSize="14"/>

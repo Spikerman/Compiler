@@ -46,18 +46,18 @@ namespace Compiler
                     }
                     else if (string.IsNullOrEmpty(p.Type))
                     {
-                        Output("NULL ");
+                        //Output("NULL ");
                     }
                     else
                     {
-                        Output("Error ");
+                        //Output("Error ");
                     }
                     p = p.Next;
                 }
                 Output(Environment.NewLine);
             }
 
-            Output("SymbolTable END");
+            //Output("SymbolTable END");
             Output(Environment.NewLine);
             return _outputString;
         }

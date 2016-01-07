@@ -136,10 +136,8 @@ namespace Compiler
                     tempList = new LinkedList<Token>(semanticList);
                     k = whilestmt_go(tempList, symbolTable);
                 }
-                if (!k)
-                {
-                    whilestmt_go(semanticList, symbolTable);
-                }
+                //如果能运行到这里，k一定为false
+                whilestmt_go(semanticList, symbolTable);
             }
             else if (semanticList.First.Value.Data == ConstString.Assgstmt)
             {
@@ -578,13 +576,15 @@ namespace Compiler
             }
             else if (cal == ConstString.除号)
             {
-                if(b==0)
+                if (b == 0)
                 {
                     Output("divided by zero");
                     Output(Environment.NewLine);
                 }
                 else
-                a = a / b;
+                {
+                    a = a / b;
+                }
             }
             else if (cal == string.Empty)
             {
@@ -627,7 +627,9 @@ namespace Compiler
                                 Output(Environment.NewLine);
                             }
                             else
+                            {
                                 a = a / b;
+                            }
                         }
                         else if (m == string.Empty)
                         {
@@ -675,7 +677,9 @@ namespace Compiler
                                 Output(Environment.NewLine);
                             }
                             else
+                            {
                                 a = a / b;
+                            }
                         }
                         else if (m == string.Empty)
                         {

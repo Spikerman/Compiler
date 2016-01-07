@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Compiler.DataModel.View;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -22,7 +19,7 @@ namespace Compiler
         {
             InitializeComponent();
         }
-        
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
         }
@@ -52,6 +49,10 @@ namespace Compiler
 
         private void 词法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_instance.CodeFile == null)
+            {
+                return;
+            }
             MainWebView.Visibility = Visibility.Collapsed;
             ScenarioFrame.Visibility = Visibility.Collapsed;
             演示TextBox.Visibility = Visibility.Visible;
@@ -60,6 +61,10 @@ namespace Compiler
 
         private void 语法分析AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_instance.CodeFile == null)
+            {
+                return;
+            }
             MainWebView.Visibility = Visibility.Collapsed;
             ScenarioFrame.Visibility = Visibility.Visible;
             演示TextBox.Visibility = Visibility.Collapsed;
@@ -68,6 +73,10 @@ namespace Compiler
 
         private void 三地址AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_instance.CodeFile == null)
+            {
+                return;
+            }
             MainWebView.Visibility = Visibility.Collapsed;
             ScenarioFrame.Visibility = Visibility.Collapsed;
             演示TextBox.Visibility = Visibility.Visible;
@@ -82,6 +91,10 @@ namespace Compiler
 
         private void 属性文法AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_instance.CodeFile == null)
+            {
+                return;
+            }
             MainWebView.Visibility = Visibility.Collapsed;
             ScenarioFrame.Visibility = Visibility.Collapsed;
             演示TextBox.Visibility = Visibility.Visible;
@@ -92,7 +105,7 @@ namespace Compiler
                 in1.AddLast(item);
             }
             演示TextBox.Text = Semantic.semantic_go(in1, _instance.SymbolTable);
-            演示TextBox.Text += Environment.NewLine;
+            //演示TextBox.Text += Environment.NewLine;
             演示TextBox.Text += SymbolTable.print_symbol_table(_instance.SymbolTable);
         }
 
@@ -128,6 +141,18 @@ namespace Compiler
             output = output.Replace("&nbsp;<span class=\"terminator\">;</span>&nbsp;", "<span class=\"terminator\">;</span>&nbsp;");
             output += endHtml;
             MainWebView.NavigateToString(output);
+        }
+
+        private void 预测分析表AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_instance.CodeFile == null)
+            {
+                return;
+            }
+            MainWebView.Visibility = Visibility.Visible;
+            ScenarioFrame.Visibility = Visibility.Collapsed;
+            演示TextBox.Visibility = Visibility.Collapsed;
+            MainWebView.Navigate(new Uri("ms-appx-web:///LL1Table.html"));
         }
     }
 }

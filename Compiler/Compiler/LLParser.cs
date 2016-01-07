@@ -63,8 +63,8 @@ namespace Compiler
 
             if (stackTopWord == ConstString.Program && tokenData == ConstString.左大括号)
             {
-                string[] Body = { ConstString.Compoundstmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Compoundstmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Program);
@@ -73,8 +73,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.If)
             {
-                string[] Body = { ConstString.Ifstmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Ifstmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -83,8 +83,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.While)
             {
-                string[] Body = { ConstString.Whilestmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Whilestmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -93,8 +93,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenType == ConstString.Id)
             {
-                string[] Body = { ConstString.Assgstmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Assgstmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -103,8 +103,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmt && tokenData == ConstString.左大括号)
             {
-                string[] Body = { ConstString.Compoundstmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Compoundstmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmt);
@@ -113,8 +113,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Compoundstmt && tokenData == ConstString.左大括号)
             {
-                string[] Body = { ConstString.左大括号, ConstString.Stmts, ConstString.右大括号 };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.左大括号, ConstString.Stmts, ConstString.右大括号 };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Compoundstmt);
@@ -123,8 +123,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmts && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号 || tokenType == ConstString.Id))
             {
-                string[] Body = { ConstString.Stmt, ConstString.Stmts };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Stmt, ConstString.Stmts };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Stmts);
@@ -133,8 +133,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Stmts && tokenData == ConstString.右大括号)
             {
-                string[] Body = { };
-                出栈入栈(wordStack, Body);
+                string[] body = { };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Stmts空);
                 Output(Environment.NewLine);
@@ -143,9 +143,9 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Ifstmt && tokenData == ConstString.If)
             {
-                string[] Body = {ConstString.If, ConstString.左括号, ConstString.Boolexpr,
+                string[] body = {ConstString.If, ConstString.左括号, ConstString.Boolexpr,
                     ConstString.右括号, ConstString.Then, ConstString.Stmt, ConstString.Else, ConstString.Stmt };
-                出栈入栈(wordStack, Body);
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 sum.Push(_llSearchCounter);
@@ -155,8 +155,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Whilestmt && tokenData == ConstString.While)
             {
-                string[] Body = { ConstString.While, ConstString.左括号, ConstString.Boolexpr, ConstString.右括号, ConstString.Stmt };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.While, ConstString.左括号, ConstString.Boolexpr, ConstString.右括号, ConstString.Stmt };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Whilestmt);
@@ -165,8 +165,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Assgstmt && tokenType == ConstString.Id)
             {
-                string[] Body = { ConstString.Id, ConstString.等号, ConstString.Arithexpr, ConstString.分号 };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Id, ConstString.等号, ConstString.Arithexpr, ConstString.分号 };
+                出栈入栈(wordStack, body);
                 sum.Push(_llSearchCounter);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
@@ -176,8 +176,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
-                string[] Body = { ConstString.Arithexpr, ConstString.Boolop, ConstString.Arithexpr };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Arithexpr, ConstString.Boolop, ConstString.Arithexpr };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Boolexpr);
@@ -186,8 +186,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolop && tokenType == ConstString.RelationOperator)
             {
-                string[] Body = { tokenData };
-                出栈入栈(wordStack, Body);
+                string[] body = { tokenData };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Boolop);
                 Output(Environment.NewLine);
@@ -195,8 +195,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenType == ConstString.Id || tokenData == ConstString.左括号))
             {
-                string[] Body = { ConstString.Multexpr, ConstString.Arithexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexpr);
@@ -205,8 +205,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.加号)
             {
-                string[] Body = { ConstString.加号, ConstString.Multexpr, ConstString.Arithexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.加号, ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexprprime);
@@ -215,8 +215,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && tokenData == ConstString.减号)
             {
-                string[] Body = { ConstString.减号, ConstString.Multexpr, ConstString.Arithexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.减号, ConstString.Multexpr, ConstString.Arithexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Arithexprprime);
@@ -225,8 +225,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Arithexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
-                string[] Body = { };
-                出栈入栈(wordStack, Body);
+                string[] body = { };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Arithexprprime空);
                 Output(Environment.NewLine);
@@ -235,8 +235,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenType == ConstString.RealNumber || tokenData == ConstString.左括号))
             {
-                string[] Body = { ConstString.Simpleexpr, ConstString.Multexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexpr);
@@ -245,8 +245,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.乘号)
             {
-                string[] Body = { ConstString.乘号, ConstString.Simpleexpr, ConstString.Multexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.乘号, ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexprprime);
@@ -255,8 +255,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && tokenData == ConstString.除号)
             {
-                string[] Body = { ConstString.除号, ConstString.Simpleexpr, ConstString.Multexprprime };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.除号, ConstString.Simpleexpr, ConstString.Multexprprime };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Multexprprime);
@@ -265,8 +265,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Multexprprime && (tokenType == ConstString.RelationOperator || tokenData == ConstString.加号 || tokenData == ConstString.减号 || tokenData == ConstString.右括号 || tokenData == ConstString.分号))
             {
-                string[] Body = { };
-                出栈入栈(wordStack, Body);
+                string[] body = { };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Multexprprime空);
                 Output(Environment.NewLine);
@@ -275,8 +275,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && tokenType == ConstString.Id)
             {
-                string[] Body = { ConstString.Id };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Id };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -285,8 +285,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
-                string[] Body = { ConstString.Num };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.Num };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -295,8 +295,8 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Simpleexpr && tokenData == ConstString.左括号)
             {
-                string[] Body = { ConstString.左括号, ConstString.Arithexpr, ConstString.右括号 };
-                出栈入栈(wordStack, Body);
+                string[] body = { ConstString.左括号, ConstString.Arithexpr, ConstString.右括号 };
+                出栈入栈(wordStack, body);
                 PrintSpace(_llSearchCounter);
                 _llSearchCounter++;
                 Output(ConstString.Simpleexpr);
@@ -305,8 +305,7 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Id && tokenType == ConstString.Id)
             {
-                string[] Body = null;
-                出栈入栈(wordStack, Body);
+                出栈入栈(wordStack, null);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Id);
                 Output(Environment.NewLine);
@@ -315,8 +314,7 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Num && (tokenType == ConstString.Integer || tokenType == ConstString.RealNumber))
             {
-                string[] Body = null;
-                出栈入栈(wordStack, Body);
+                出栈入栈(wordStack, null);
                 PrintSpace(_llSearchCounter);
                 Output(ConstString.Num);
                 Output(Environment.NewLine);
@@ -325,37 +323,37 @@ namespace Compiler
             }
             else if (stackTopWord == ConstString.Boolop && (tokenType == ConstString.Id || tokenType == ConstString.Integer || tokenData == ConstString.右括号))
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString()+ Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Program && tokenData == ConstString.EndTerminal)
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Stmts && tokenData == ConstString.右大括号)
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Boolexpr && tokenData == ConstString.右括号)
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenType == ConstString.RelationOperator || tokenData == ConstString.分号 || tokenData == ConstString.右括号))
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenData == ConstString.加号 || tokenData == ConstString.减号))
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenData == ConstString.乘号 || tokenData == ConstString.除号))
             {
-                _outputString += "Synching at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + Environment.NewLine;
+                Output("Synching at line " + lineNumber + " column " + columnNumber + Environment.NewLine);
                 wordStack.Pop();
             }
             else if (stackTopWord == ConstString.Program && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -363,8 +361,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-
-                _outputString += "invalide token at line "+lineNumber.ToString()+" column "+columnNumber.ToString()+"! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Ifstmt && (tokenData == ConstString.左大括号 || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -372,7 +369,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Whilestmt && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenType == ConstString.Id
@@ -380,7 +377,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Assgstmt && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -388,7 +385,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Stmt && (
@@ -396,7 +393,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Stmts && (
@@ -404,7 +401,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Boolexpr && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -412,7 +409,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号
                 ))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Boolop && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -420,7 +417,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Arithexpr && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While
@@ -428,7 +425,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.右大括号
                 ))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Arithexprprime && (tokenData == ConstString.If || tokenData == ConstString.左大括号 || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -436,7 +433,7 @@ namespace Compiler
                  || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.右大括号
                 ))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Multexpr && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -444,7 +441,7 @@ namespace Compiler
                 || tokenData == ConstString.乘号 || tokenData == ConstString.除号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Multexprprime && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -452,7 +449,7 @@ namespace Compiler
                 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Simpleexpr && (tokenData == ConstString.If || tokenData == ConstString.While || tokenData == ConstString.左大括号
@@ -460,7 +457,7 @@ namespace Compiler
                 || tokenData == ConstString.减号 || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == ConstString.Compoundstmt && (tokenData == ConstString.If || tokenData == ConstString.While || tokenType == ConstString.Id
@@ -469,13 +466,12 @@ namespace Compiler
                  || tokenData == ConstString.分号 || tokenData == ConstString.右大括号 ||
                 tokenData == ConstString.右括号))
             {
-                _outputString += "invalide token at line " + lineNumber.ToString() + " column " + columnNumber.ToString() + "! Ignore it and go on parsing" + Environment.NewLine;
+                Output("invalide token at line " + lineNumber + " column " + columnNumber + "! Ignore it and go on parsing" + Environment.NewLine);
                 tokenList.RemoveFirst();
             }
             else if (stackTopWord == tokenData)
             {
-                string[] Body = null;
-                出栈入栈(wordStack, Body);
+                出栈入栈(wordStack, null);
                 semanticList.AddLast(tokenTop);
                 tokenList.RemoveFirst();
                 if (tokenType == ConstString.Operator || tokenType == ConstString.RelationOperator)
