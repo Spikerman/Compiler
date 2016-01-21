@@ -13,7 +13,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <!--<ColumnDefinition Width="*"/>-->
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <controls:TreeView x:Name="文件夹TreeView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
                                    ItemsSource="{x:Bind TreeItems}">
@@ -29,7 +29,7 @@
                 </DataTemplate>
             </controls:TreeView.ItemTemplate>
         </controls:TreeView>
-        <!--<TextBox x:Name="演示TextBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 Grid.Column="1"/>-->
+        <TextBox x:Name="演示TextBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 Grid.Column="1"/>
     </Grid>
 </Page>

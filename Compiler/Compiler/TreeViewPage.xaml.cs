@@ -45,7 +45,7 @@ namespace Compiler
                 }
                 //SemanticList在这里产生。
                 string log = LlParser.Parser(in1, _instance.SemanticList, TreeItems);
-                //演示TextBox.Text = log;
+                演示TextBox.Text = log;
             }
 
             base.OnNavigatedTo(e);
